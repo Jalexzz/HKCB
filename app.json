@@ -11,7 +11,12 @@
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "com.jalexzzStudio.hkCallBlocker",
       "entitlements": {
-        "com.apple.security.application-groups": ["group.com.jalexzzStudio.hkCallBlocker"]
+        "com.apple.security.application-groups": [
+          "group.com.jalexzzStudio.hkCallBlocker"
+        ]
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -42,6 +47,35 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "bundleIdentifier": "com.jalexzzStudio.hkCallBlocker.call-directory",
+                  "targetName": "calldirectory",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.com.yourname.hkcallblocker"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "155343e3-b1b0-428c-84dc-86976f41274f"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/155343e3-b1b0-428c-84dc-86976f41274f"
     }
   }
 }
