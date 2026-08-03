@@ -1,0 +1,10 @@
+{
+  "name": "my-call-manager",
+  "version": "1.0.0",
+  "description": "Local native bridge for iOS CallKit",
+  "main": "index.ts",
+  "types": "index.ts",
+  "peerDependencies": {
+    "expo": "*"
+  }
+}
