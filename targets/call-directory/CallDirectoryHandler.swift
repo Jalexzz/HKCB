@@ -3,28 +3,46 @@ import CallKit
 
 class CallDirectoryHandler: CXCallDirectoryProvider {
     
-    // --- WORKSPACE WHITELIST CONFIGURATION ---
-    // Add any important numbers starting with 3 here.
-    // Format: [Phone_Number_With_Country_Code: "Display Label Name"]
-    // Note: Numbers MUST be exactly 11 digits long (852 + 8-digit HK number).
-    private let whitelist: [Int64: String] = [
-        // Hospitals & Clinics
-        85230012345: "Hospital Authority Office",
-        85231234567: "Queen Elizabeth Hospital",
-        85235055555: "Prince of Wales Hospital",
+    // --- 1. ENTIRE INSTITUTIONAL PREFIX BLOCKS (Whitelists 10,000 numbers per entry) ---
+    // If a number matches this prefix, it will bypass the blocker and ring through normally.
+    // Example: 8523943 whitelists everything from 85239430000 to 85239439999.
+    private let whitelistedPrefixes: Set<Int64> = [
+        // --- PUBLIC HOSPITALS (Hospital Authority Blocks) ---
+        8523505, // Prince of Wales Hospital (Sha Tin)
+        8523506, // Queen Elizabeth Hospital / Kowloon Central Cluster
+        8523949, // United Christian Hospital (Kwun Tong)
+        8523408, // Caritas Medical Centre (Sham Shui Po)
+        8523513, // Hong Kong Children's Hospital (Kowloon Bay)
+        8523129, // North District Hospital / Alice Ho Miu Ling Nethersole Hospital
         
-        // Banks & Anti-Fraud
-        85231281234: "HSBC Fraud Verification",
-        85236080000: "Bank of East Asia",
-        85237187111: "Standard Chartered Bank",
+        // --- UNIVERSITIES ---
+        8523943, // CUHK (The Chinese University of Hong Kong) - All departments
+        8523917, // HKU (The University of Hong Kong) - Main administrative & faculties
+        8523442, // CityU (City University of Hong Kong)
+        8523400, // PolyU (The Hong Kong Polytechnic University)
+        8523411, // HKBU (Hong Kong Baptist University)
+        8523963, // HSUHK (The Hang Seng University of Hong Kong)
         
-        // Government Departments
-        85231888888: "Inland Revenue Dept (Tax)",
-        85238212000: "Immigration Department",
+        // --- MAJOR GOVERNMENT BLOCKS ---
+        8523142, // Integrated Call Centre / Efficiency Office (1823 Hotline Support)
+        8523919, // Legislative Council Secretariat
+        8523821  // Immigration Department (Specific Administrative Blocks)
+    ]
+    
+    // --- 2. SPECIFIC HIGH-PROFILE CENTRAL LINES (With Custom Caller ID Names) ---
+    // Format: [Phone_Number: "Display Name"]
+    // Must be exactly 11 digits (852 + 8 digits). Sorted ascending for iOS.
+    private let specificWhitelist: [Int64: String] = [
+        // Government & Utilities
+        85231015555: "Companies Registry Hotline",
+        85237596888: "Customs & Excise Department",
+        85239001111: "Hong Kong Police Force HQ",
         
-        // Universities & Schools
-        85239171111: "HKU Administration",
-        85239436000: "CUHK Campus Office",
+        // Major Banking Support / Outbound Fraud Detection Lines
+        85236670800: "HSBC Customer Services",
+        85237141388: "Hang Seng Bank Helpline",
+        85237181818: "Standard Chartered Bank",
+        85239882388: "Bank of China (HK) Hotline"
 
         // Other
         85260832065: "Honey Shan"
@@ -37,13 +55,13 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
         let isActive = sharedDefaults?.bool(forKey: "isBlockActive") ?? false
         
         if isActive {
-            // 1. First, identify and display names for the whitelisted numbers
+            // 1. Label the explicit individual numbers
             addAllIdentificationPhoneNumbers(to: context)
             
-            // 2. Next, block the massive 10M range, skipping the whitelisted items
+            // 2. Block the 10M stream, skipping all matched blocks and individual numbers
             addAllBlockingPhoneNumbers(to: context)
         } else {
-            print("Shield is OFF. All filters cleared.")
+            print("Shield is OFF. Call filters purged.")
         }
         
         context.completeRequest()
@@ -52,21 +70,24 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
     private func addAllBlockingPhoneNumbers(to context: CXCallDirectoryExtensionContext) {
         let startNumber: Int64 = 85230000000
         let endNumber: Int64   = 85239999999
-        let chunkSize: Int64   = 50000 // Small batches to protect the 15MB iOS memory limit
+        let chunkSize: Int64   = 50000
         
         var currentStart = startNumber
-        
-        // Convert whitelist keys into a fast hash set for O(1) loop lookups
-        let whitelistSet = Set(whitelist.keys)
+        let specificWhitelistKeys = Set(specificWhitelist.keys)
         
         while currentStart <= endNumber {
             autoreleasepool {
                 let currentEnd = min(currentStart + chunkSize, endNumber)
                 for number in currentStart...currentEnd {
                     
-                    // CRITICAL WHITELIST CHECK: 
-                    // If this number is in our whitelist, SKIP blocking it entirely.
-                    if whitelistSet.contains(number) {
+                    // Rule A: Skip if explicitly listed in individual whitelists
+                    if specificWhitelistKeys.contains(number) {
+                        continue
+                    }
+                    
+                    // Rule B: Extract the first 7 digits (Country Code + 4 digits) to check the institutional block
+                    let prefixBlock = number / 10000
+                    if whitelistedPrefixes.contains(prefixBlock) {
                         continue
                     }
                     
@@ -78,11 +99,9 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
     }
 
     private func addAllIdentificationPhoneNumbers(to context: CXCallDirectoryExtensionContext) {
-        // iOS REQUIREMENT: Identification numbers MUST be fed into CallKit in strictly ascending order.
-        let sortedWhitelistedNumbers = whitelist.keys.sorted()
-        
-        for number in sortedWhitelistedNumbers {
-            if let label = whitelist[number] {
+        let sortedKeys = specificWhitelist.keys.sorted()
+        for number in sortedKeys {
+            if let label = specificWhitelist[number] {
                 context.addIdentificationEntry(withNextSequentialPhoneNumber: number, label: label)
             }
         }
