@@ -60,7 +60,7 @@
                   "targetName": "calldirectory",
                   "entitlements": {
                     "com.apple.security.application-groups": [
-                      "group.com.yourname.hkcallblocker"
+                      "group.com.jalexzzStudio.hkCallBlocker"
                     ]
                   }
                 }

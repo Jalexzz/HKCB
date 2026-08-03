@@ -5,7 +5,7 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
     override func beginRequest(with context: CXCallDirectoryExtensionContext) {
         context.delegate = self
         
-        let sharedDefaults = UserDefaults(suiteName: "group.com.yourname.hkcallblocker")
+        let sharedDefaults = UserDefaults(suiteName: "group.com.jalexzzStudio.hkCallBlocker")
         
         // Check if the user turned the shield ON or OFF
         let isActive = sharedDefaults?.bool(forKey: "isBlockActive") ?? false

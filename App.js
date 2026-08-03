@@ -4,7 +4,7 @@ import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } fr
 import { setBlockStateAndReload } from './modules/my-call-manager';
 
 // Ensure this matches your bundle identifier + ".call-directory"
-const EXTENSION_IDENTIFIER = 'com.yourname.hkcallblocker.call-directory';
+const EXTENSION_IDENTIFIER = 'com.jalexzzStudio.hkCallBlocker.call-directory';
 
 export default function App() {
   const [isActive, setIsActive] = useState(false);

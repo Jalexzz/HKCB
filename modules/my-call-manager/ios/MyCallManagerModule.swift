@@ -8,7 +8,7 @@ public class MyCallManagerModule: Module {
     AsyncFunction("setBlockStateAndReload") { (isActive: Bool, identifier: String, promise: Promise) in
       
       // Save state to App Group
-      if let sharedDefaults = UserDefaults(suiteName: "group.com.yourname.hkcallblocker") {
+      if let sharedDefaults = UserDefaults(suiteName: "group.com.jalexzzStudio.hkCallBlocker") {
         sharedDefaults.set(isActive, forKey: "isBlockActive")
         sharedDefaults.synchronize()
       }
