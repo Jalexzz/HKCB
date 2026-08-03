@@ -5,15 +5,23 @@ public class MyCallManagerModule: Module {
   public func definition() -> ModuleDefinition {
     Name("MyCallManager")
 
-    AsyncFunction("setBlockStateAndReload") { (isActive: Bool, identifier: String, promise: Promise) in
+    AsyncFunction("setBlockStateAndReload") { (
+      isActive: Bool, 
+      identifier: String, 
+      prefixes: [Int64], 
+      specifics: [String: String], 
+      promise: Promise
+    ) in
       
-      // Save state to App Group
+      // Open the shared App Group database
       if let sharedDefaults = UserDefaults(suiteName: "group.com.jalexzzStudio.hkCallBlocker") {
         sharedDefaults.set(isActive, forKey: "isBlockActive")
+        sharedDefaults.set(prefixes, forKey: "whitelistedPrefixes")
+        sharedDefaults.set(specifics, forKey: "specificWhitelist")
         sharedDefaults.synchronize()
       }
       
-      // Tell iOS CallKit to apply changes
+      // Wake up the CallKit background extension process to pull fresh data
       CXCallDirectoryManager.sharedInstance.reloadExtension(withIdentifier: identifier) { error in
         if let error = error {
           promise.reject(error)
