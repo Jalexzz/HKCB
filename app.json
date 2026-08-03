@@ -9,9 +9,9 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon",
-      "bundleIdentifier": "com.jalexzzStudio.hkcallblocker",
+      "bundleIdentifier": "com.jalexzzStudio.hkCallBlocker",
       "entitlements": {
-        "com.apple.security.application-groups": ["group.com.yourname.hkcallblocker"]
+        "com.apple.security.application-groups": ["group.com.jalexzzStudio.hkCallBlocker"]
       }
     },
     "android": {
