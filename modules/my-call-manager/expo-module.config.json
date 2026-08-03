@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["MyCallManagerModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.mycallmanager.MyCallManagerModule"]
+  }
+}
