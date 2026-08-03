@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { setBlockStateAndReload } from '../modules/my-call-manager'; // Fixed path for subfolder
+import { setBlockStateAndReload } from '../../modules/my-call-manager'; // Fixed path for subfolder
 
 const EXTENSION_IDENTIFIER = 'com.yourname.hkcallblocker.call-directory';
 
@@ -31,7 +31,7 @@ export default function IndexScreen() {
       setIsActive(newState);
     } catch (error) {
       Alert.alert(
-        'Action Required', 
+        'Action Required',
         'Please go to iOS Settings > Phone > Call Blocking & Identification and enable this app.'
       );
     } finally {
@@ -59,8 +59,8 @@ export default function IndexScreen() {
         )}
       </View>
 
-      <TouchableOpacity 
-        style={[styles.button, isProcessing && styles.buttonDisabled, isActive ? styles.btnOff : styles.btnOn]} 
+      <TouchableOpacity
+        style={[styles.button, isProcessing && styles.buttonDisabled, isActive ? styles.btnOff : styles.btnOn]}
         onPress={toggleShield}
         disabled={isProcessing}
       >
