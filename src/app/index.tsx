@@ -33,14 +33,31 @@ const DATA_PREFIXES_META = [// --- Hospital Authority ---
   { prefix: 8523762, group: "HKU SPACE" },
   { prefix: 8523928, group: "Vocational Training Council (VTC)" },
 
-  // --- Major Banks & Financial Services ---
+  // --- Traditional Banks ---
+  { prefix: 8523948, group: "Standard Chartered Bank (Hong Kong)" },
+  { prefix: 8523608, group: "The Bank of East Asia (BEA)" },
+  { prefix: 8523988, group: "Bank of China (Hong Kong)" }, 
+  { prefix: 8523668, group: "DBS Bank (Marketing/Sales)" },
+
+  // --- Virtual Banks ---
   { prefix: 8523665, group: "ZA Bank" },
   { prefix: 8523896, group: "Mox Bank" },
   { prefix: 8523761, group: "WeLab Bank" },
   { prefix: 8523897, group: "Livi Bank" },
   { prefix: 8523843, group: "Ant Bank" },
-  { prefix: 8523948, group: "Standard Chartered Bank (Hong Kong)" },
-  { prefix: 8523608, group: "The Bank of East Asia (BEA)" },
+  { prefix: 8523718, group: "Airstar Bank" },
+  { prefix: 8523762, group: "Ping An OneConnect Bank (PAOB) / HKU SPACE" }, // Shared block
+  { prefix: 8523187, group: "Fusion Bank (Business)" },
+  
+  // --- HKSAR Government Services ---
+  { prefix: 8523142, group: "HKSAR Government - 1823 Call Centre (Outbound)" },
+  { prefix: 8523152, group: "HKSAR Government - 1823 Call Centre (Outbound)" },
+  
+  // --- Telecom & Utilities ---
+  { prefix: 8523999, group: "HKBN (Hong Kong Broadband Network)" },
+  { prefix: 8523626, group: "HKBN (Hong Kong Broadband Network)" },
+  { prefix: 8523162, group: "3HK (Three Hong Kong)" },
+  { prefix: 8523166, group: "3HK (Three Hong Kong)" },
 ];
 
 const DATA_PREFIXES = DATA_PREFIXES_META.map(item => item.prefix);
