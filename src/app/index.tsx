@@ -19,6 +19,7 @@ const DATA_PREFIXES_META = [// --- Hospital Authority ---
   { prefix: 8523507, group: "Hospital Authority - Tuen Mun Hospital" },
   { prefix: 8523125, group: "Hospital Authority - Pamela Youde Nethersole Eastern Hospital" },
   { prefix: 8523941, group: "Hospital Authority - Hong Kong Eye Hospital" },
+  { prefix: 8523467, group: "Hospital Authority - North Lantau Hospital" },
 
   // --- Universities & Higher Education ---
   { prefix: 8523943, group: "The Chinese University of Hong Kong (CUHK)" },
@@ -49,9 +50,13 @@ const DATA_PREFIXES_META = [// --- Hospital Authority ---
   { prefix: 8523762, group: "Ping An OneConnect Bank (PAOB) / HKU SPACE" }, // Shared block
   { prefix: 8523187, group: "Fusion Bank (Business)" },
   
-  // --- HKSAR Government Services ---
+  // --- Law Enforcement & Major Government ---
   { prefix: 8523142, group: "HKSAR Government - 1823 Call Centre (Outbound)" },
   { prefix: 8523152, group: "HKSAR Government - 1823 Call Centre (Outbound)" },
+  { prefix: 8523661, group: "Hong Kong Police Force (Headquarters & Regional Stations)" },
+  { prefix: 8523759, group: "Customs and Excise Department" },
+  { prefix: 8523919, group: "Legislative Council (LegCo Secretariat)" },
+  { prefix: 8523961, group: "Department of Health" },
   
   // --- Telecom & Utilities ---
   { prefix: 8523999, group: "HKBN (Hong Kong Broadband Network)" },
@@ -64,15 +69,18 @@ const DATA_PREFIXES = DATA_PREFIXES_META.map(item => item.prefix);
 
 const DATA_SPECIFICS: Record<string, string> = {
   // --- Traditional & Virtual Banks ---
-  "85239882388": "Bank of China (Hong Kong)",
-  "85236653665": "ZA Bank Hotline",
-  "85238963896": "Mox Bank Hotline",
-  "85237618888": "WeLab Bank Hotline",
-  "85238978888": "Livi Bank Hotline",
-  "85238438888": "Ant Bank Hotline",
+  // "85239882388": "Bank of China (Hong Kong)",
+  // "85236653665": "ZA Bank Hotline",
+  // "85238963896": "Mox Bank Hotline",
+  // "85237618888": "WeLab Bank Hotline",
+  // "85238978888": "Livi Bank Hotline",
+  // "85238438888": "Ant Bank Hotline",
 
+  // --- Specific Government & Public Main Lines ---
+  // "85239193333": "Legislative Council Secretariat",
+  
   // --- Other ---
-  "85260832065": "Honey Shan"
+  // "85260832065": "Honey Shan"
 };
 
 export default function IndexScreen() {
