@@ -10,6 +10,7 @@
     "ios": {
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "com.jalexzzStudio.hkCallBlocker",
+      "appleTeamId": "2956VJGZ8R",
       "entitlements": {
         "com.apple.security.application-groups": [
           "group.com.jalexzzStudio.hkCallBlocker"
