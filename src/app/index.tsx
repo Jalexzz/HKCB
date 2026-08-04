@@ -7,6 +7,7 @@ const BUNDLE_ID = 'com.jalexzzStudio.hkCallBlocker';
 
 // Institutional prefix blocks with descriptive labels for the UI
 const DATA_PREFIXES_META = [
+  // --- Existing Hospitals & Universities ---
   { prefix: 8523505, group: "Hospital Authority - Prince of Wales Hospital (Sha Tin)" },
   { prefix: 8523506, group: "Hospital Authority - Queen Elizabeth Hospital Cluster" },
   { prefix: 8523949, group: "Hospital Authority - United Christian Hospital (Kwun Tong)" },
@@ -19,9 +20,15 @@ const DATA_PREFIXES_META = [
   { prefix: 8523400, group: "The Hong Kong Polytechnic University (PolyU)" },
   { prefix: 8523411, group: "Hong Kong Baptist University (HKBU)" },
   { prefix: 8523963, group: "The Hang Seng University of Hong Kong (HSUHK)" },
+  { prefix: 8523588, group: "The Hong Kong University of Science and Technology (HKUST)" },
+  { prefix: 8523948, group: "The Education University of Hong Kong (EdUHK)" },
+  { prefix: 8523161, group: "Lingnan University (LU)" },
+  { prefix: 8523120, group: "Hong Kong Metropolitan University (HKMU)" },
   { prefix: 8523142, group: "Government - 1823 Integrated Call Centre Support" },
   { prefix: 8523919, group: "Government - Legislative Council Secretariat" },
-  { prefix: 8523821, group: "Government - Immigration Department Administration" }
+  { prefix: 8523821, group: "Government - Immigration Department Administration" },
+  { prefix: 8523594, group: "Government - Inland Revenue Department (IRD)" },
+  { prefix: 8523971, group: "Government - Department of Health Enquiries" }
 ];
 
 const DATA_PREFIXES = DATA_PREFIXES_META.map(item => item.prefix);
@@ -33,7 +40,11 @@ const DATA_SPECIFICS: Record<string, string> = {
   "85236670800": "HSBC Customer Services",
   "85237141388": "Hang Seng Helpline",
   "85237181818": "Standard Chartered",
-  "85239882388": "Bank of China HK"
+  "85239882388": "Bank of China HK",
+  "85236083608": "The Bank of East Asia (BEA) Hotline",
+  "85236653665": "DBS Bank (Hong Kong) Customer Service",
+  "85230338333": "Citibank Hong Kong Phone Banking",
+  "85237982000": "ICBC (Asia) Customer Care"
 };
 
 export default function IndexScreen() {
