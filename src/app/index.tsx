@@ -5,15 +5,17 @@ import { setBlockStateAndReload, saveWhitelist } from '../../modules/my-call-man
 
 const BUNDLE_ID = 'com.jalexzzStudio.hkCallBlocker';
 
-// Institutional prefix blocks with descriptive labels for the UI
+// Institutional prefix blocks with full descriptive labels for the UI
 const DATA_PREFIXES_META = [
-  // --- Existing Hospitals & Universities ---
+  // --- Hospital Authority ---
   { prefix: 8523505, group: "Hospital Authority - Prince of Wales Hospital (Sha Tin)" },
   { prefix: 8523506, group: "Hospital Authority - Queen Elizabeth Hospital Cluster" },
   { prefix: 8523949, group: "Hospital Authority - United Christian Hospital (Kwun Tong)" },
   { prefix: 8523408, group: "Hospital Authority - Caritas Medical Centre (Sham Shui Po)" },
   { prefix: 8523513, group: "Hospital Authority - Hong Kong Children's Hospital" },
   { prefix: 8523129, group: "Hospital Authority - North District & Nethersole Hospital" },
+
+  // --- Universities & Higher Education ---
   { prefix: 8523943, group: "The Chinese University of Hong Kong (CUHK)" },
   { prefix: 8523917, group: "The University of Hong Kong (HKU) - Main Campus" },
   { prefix: 8523442, group: "City University of Hong Kong (CityU)" },
@@ -24,6 +26,10 @@ const DATA_PREFIXES_META = [
   { prefix: 8523948, group: "The Education University of Hong Kong (EdUHK)" },
   { prefix: 8523161, group: "Lingnan University (LU)" },
   { prefix: 8523120, group: "Hong Kong Metropolitan University (HKMU)" },
+  { prefix: 8523180, group: "Hong Kong Shue Yan University (HKSYU)" },
+  { prefix: 8523899, group: "The Hong Kong Academy for Performing Arts (HKAPA)" },
+
+  // --- Government & Public Services ---
   { prefix: 8523142, group: "Government - 1823 Integrated Call Centre Support" },
   { prefix: 8523919, group: "Government - Legislative Council Secretariat" },
   { prefix: 8523821, group: "Government - Immigration Department Administration" },
@@ -34,17 +40,29 @@ const DATA_PREFIXES_META = [
 const DATA_PREFIXES = DATA_PREFIXES_META.map(item => item.prefix);
 
 const DATA_SPECIFICS: Record<string, string> = {
+  // --- Government & Regulatory Bodies ---
   "85231015555": "Companies Registry",
   "85237596888": "Customs Dept",
   "85239001111": "HK Police Force HQ",
+  "85228788196": "Hong Kong Monetary Authority (HKMA)",
+  "85222842288": "Securities and Futures Commission (SFC)",
+  "85229180102": "Mandatory Provident Fund Schemes Authority (MPFA)",
+
+  // --- Commercial Banks ---
   "85236670800": "HSBC Customer Services",
   "85237141388": "Hang Seng Helpline",
   "85237181818": "Standard Chartered",
-  "85239882388": "Bank of China HK",
-  "85236083608": "The Bank of East Asia (BEA) Hotline",
-  "85236653665": "DBS Bank (Hong Kong) Customer Service",
-  "85230338333": "Citibank Hong Kong Phone Banking",
-  "85237982000": "ICBC (Asia) Customer Care"
+  "85239882388": "Bank of China (HK)",
+  "85236083608": "The Bank of East Asia (BEA)",
+  "85236653665": "DBS Bank (Hong Kong)",
+  "85230338333": "Citibank Hong Kong",
+  "85237982000": "ICBC (Asia)",
+  "85237433333": "China Construction Bank (Asia)",
+  "85231895588": "OCBC Bank (Hong Kong)",
+  "85232828282": "Dah Sing Bank Customer Service"
+  
+  // --- Commercial Banks ---
+  "85260832065": "Honey Shan"
 };
 
 export default function IndexScreen() {
