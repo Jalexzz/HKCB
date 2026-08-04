@@ -34,7 +34,7 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
     private func addAllBlockingPhoneNumbers(to context: CXCallDirectoryExtensionContext, prefixes: Set<Int64>, whitelistKeys: Set<Int64>) {
         
         // ⚠️ CHANGE THESE TWO VARIABLES IN EACH OF THE 3 FOLDERS ⚠️
-        let startNumber: Int64 = 85237000000
+        let startNumber: Int64 = 85239000000
         let endNumber: Int64   = 85239999999
         
         let chunkSize: Int64   = 50000
