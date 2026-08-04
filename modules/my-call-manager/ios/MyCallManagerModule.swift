@@ -13,15 +13,14 @@ public class MyCallManagerModule: Module {
       promise: Promise
     ) in
       
-      // Open the shared App Group database
-      if let sharedDefaults = UserDefaults(suiteName: "group.com.jalexzzStudio.hkCallBlocker") {
-        sharedDefaults.set(isActive, forKey: "isBlockActive")
+      if let sharedDefaults = UserDefaults(suiteName: "group.com.yourname.hkcallblocker") {
+        // NEW: Save the active state uniquely for this specific extension identifier
+        sharedDefaults.set(isActive, forKey: "isBlockActive_\(identifier)")
         sharedDefaults.set(prefixes, forKey: "whitelistedPrefixes")
         sharedDefaults.set(specifics, forKey: "specificWhitelist")
         sharedDefaults.synchronize()
       }
       
-      // Wake up the CallKit background extension process to pull fresh data
       CXCallDirectoryManager.sharedInstance.reloadExtension(withIdentifier: identifier) { error in
         if let error = error {
           promise.reject(error)
