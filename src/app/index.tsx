@@ -5,7 +5,7 @@ import { setBlockStateAndReload, saveWhitelist } from '../../modules/my-call-man
 
 const BUNDLE_ID = 'com.jalexzzStudio.hkCallBlocker';
 
-// Institutional prefix blocks with full descriptive labels for the UI
+// Institutional prefix blocks with comprehensive descriptive group labels
 const DATA_PREFIXES_META = [
   // --- Hospital Authority ---
   { prefix: 8523505, group: "Hospital Authority - Prince of Wales Hospital (Sha Tin)" },
@@ -61,7 +61,7 @@ const DATA_SPECIFICS: Record<string, string> = {
   "85231895588": "OCBC Bank (Hong Kong)",
   "85232828282": "Dah Sing Bank Customer Service"
   
-  // --- Commercial Banks ---
+  // --- Other ---
   "85260832065": "Honey Shan"
 };
 
@@ -71,6 +71,7 @@ export default function IndexScreen() {
   
   const [status, setStatus] = useState({ 1: false, 2: false, 3: false });
   const [processing, setProcessing] = useState({ 1: false, 2: false, 3: false });
+  const [globalProcessing, setGlobalProcessing] = useState(false);
   const [isReady, setIsReady] = useState(false);
   
   const [showData, setShowData] = useState(false);
@@ -88,6 +89,40 @@ export default function IndexScreen() {
     };
     loadState();
   }, []);
+
+  const handleMasterSyncAndEnable = async () => {
+    setGlobalProcessing(true);
+    try {
+      await saveWhitelist(DATA_PREFIXES, DATA_SPECIFICS);
+      await setBlockStateAndReload(true, `${BUNDLE_ID}.call-directory-whitelist`);
+
+      for (let part = 1; part <= 3; part++) {
+        await setBlockStateAndReload(true, `${BUNDLE_ID}.call-directory-${part}`);
+      }
+
+      await AsyncStorage.multiSet([
+        ['shield_whitelist', 'ON'],
+        ['shield_1', 'ON'],
+        ['shield_2', 'ON'],
+        ['shield_3', 'ON']
+      ]);
+
+      setWhitelistActive(true);
+      setStatus({ 1: true, 2: true, 3: true });
+      
+      Alert.alert(
+        'Synchronization Complete', 
+        'All blocked ranges and enterprise whitelists have been successfully compiled into iOS CallKit.'
+      );
+    } catch (error) {
+      Alert.alert(
+        'Action Required in iOS Settings', 
+        'Please go to iOS Settings > Phone > Call Blocking & Identification and ensure all 4 HK Blocker modules are toggled ON.'
+      );
+    } finally {
+      setGlobalProcessing(false);
+    }
+  };
 
   const toggleWhitelist = async () => {
     setWhitelistProcessing(true);
@@ -128,6 +163,19 @@ export default function IndexScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Call Control Center</Text>
       <Text style={styles.subtitle}>Independent Whitelist & Modular Block Shields</Text>
+
+      {/* MASTER SYNC BUTTON */}
+      <TouchableOpacity 
+        style={[styles.masterButton, globalProcessing && styles.buttonDisabled]} 
+        onPress={handleMasterSyncAndEnable}
+        disabled={globalProcessing}
+      >
+        {globalProcessing ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.masterButtonText}>⚡ Master Sync & Enable All Shields</Text>
+        )}
+      </TouchableOpacity>
 
       {/* --- WHITELIST & CALLER ID CARD --- */}
       <View style={[styles.card, styles.whitelistCard]}>
@@ -202,8 +250,8 @@ export default function IndexScreen() {
             
             <Text style={styles.dataHeader}>🛡️ Blocked Ranges (10,000,000 Numbers)</Text>
             <View style={styles.dataBox}>
-              <Text style={styles.dataText}>Part 1: 852 3000 0000 ➔ 852 3399 9999</Text>
-              <Text style={styles.dataText}>Part 2: 852 3333 3334 ➔ 852 3699 9999</Text>
+              <Text style={styles.dataText}>Part 1: 852 3000 0000 ➔ 852 3333 3333</Text>
+              <Text style={styles.dataText}>Part 2: 852 3333 3334 ➔ 852 3666 6666</Text>
               <Text style={styles.dataText}>Part 3: 852 3666 6667 ➔ 852 3999 9999</Text>
             </View>
 
@@ -237,6 +285,8 @@ export default function IndexScreen() {
 
 const styles = StyleSheet.create({
   container: { flexGrow: 1, alignItems: 'center', paddingVertical: 50, paddingHorizontal: 20 },
+  masterButton: { backgroundColor: '#FF9500', padding: 18, borderRadius: 12, width: '100%', alignItems: 'center', marginBottom: 25, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 4 },
+  masterButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
   whitelistCard: { backgroundColor: '#f0f4ff', borderColor: '#c7d8ff' },
   bgActive: { backgroundColor: '#e6ffe6', borderColor: '#b3ffb3' },
   bgInactive: { backgroundColor: '#fff', borderColor: '#eee' },
