@@ -6,6 +6,7 @@ import { setBlockStateAndReload, saveWhitelist } from '../../modules/my-call-man
 const BUNDLE_ID = 'com.jalexzzStudio.hkCallBlocker';
 
 // Institutional prefix blocks with comprehensive descriptive group labels
+// Institutional prefix blocks with comprehensive descriptive group labels
 const DATA_PREFIXES_META = [
   // --- Hospital Authority ---
   { prefix: 8523505, group: "Hospital Authority - Prince of Wales Hospital (Sha Tin)" },
@@ -58,14 +59,15 @@ const DATA_SPECIFICS: Record<string, string> = {
   "85229180102": "Mandatory Provident Fund Schemes Authority (MPFA)",
   "85229292222": "Consumer Council Hotline",
   "85225118211": "Equal Opportunities Commission (EOC)",
+  "85234236666": "PCPD Doxxing & Fraud Prevention Hotline",
 
-  // --- Commercial Banks ---
+  // --- Traditional & Virtual Commercial Banks ---
   "85236670800": "HSBC Customer Services",
   "85237141388": "Hang Seng Helpline",
   "85237181818": "Standard Chartered",
   "85239882388": "Bank of China (HK)",
   "85236083608": "The Bank of East Asia (BEA)",
-  "85236653665": "DBS Bank (Hong Kong)",
+  "85236653665": "ZA Bank (Virtual Bank)",
   "85230338333": "Citibank Hong Kong",
   "85237982000": "ICBC (Asia)",
   "85237433333": "China Construction Bank (Asia)",
@@ -73,7 +75,8 @@ const DATA_SPECIFICS: Record<string, string> = {
   "85232828282": "Dah Sing Bank Customer Service",
   "85238230233": "Shanghai Commercial Bank",
   "85237686888": "China CITIC Bank International",
-  "85237111888": "Fubon Bank (Hong Kong)"
+  "85237111888": "Fubon Bank (Hong Kong)",
+  "85238986988": "WeLab Bank (Virtual Bank)"
 
   // --- Other ---
   "85260832065": "Honey Shan"
