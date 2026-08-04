@@ -6,8 +6,7 @@ import { setBlockStateAndReload, saveWhitelist } from '../../modules/my-call-man
 const BUNDLE_ID = 'com.jalexzzStudio.hkCallBlocker';
 
 // Institutional prefix blocks with comprehensive descriptive group labels
-const DATA_PREFIXES_META = [
-  // --- Hospital Authority ---
+const DATA_PREFIXES_META = [// --- Hospital Authority ---
   { prefix: 8523505, group: "Hospital Authority - Prince of Wales Hospital (Sha Tin)" },
   { prefix: 8523506, group: "Hospital Authority - Queen Elizabeth Hospital Cluster" },
   { prefix: 8523949, group: "Hospital Authority - United Christian Hospital (Kwun Tong)" },
@@ -15,6 +14,11 @@ const DATA_PREFIXES_META = [
   { prefix: 8523513, group: "Hospital Authority - Hong Kong Children's Hospital" },
   { prefix: 8523517, group: "Hospital Authority - Kwong Wah Hospital" },
   { prefix: 8523129, group: "Hospital Authority - Kowloon Hospital" },
+  { prefix: 8523501, group: "Hospital Authority - Queen Mary Hospital" },
+  { prefix: 8523504, group: "Hospital Authority - Princess Margaret Hospital" },
+  { prefix: 8523507, group: "Hospital Authority - Tuen Mun Hospital" },
+  { prefix: 8523125, group: "Hospital Authority - Pamela Youde Nethersole Eastern Hospital" },
+  { prefix: 8523941, group: "Hospital Authority - Hong Kong Eye Hospital" },
 
   // --- Universities & Higher Education ---
   { prefix: 8523943, group: "The Chinese University of Hong Kong (CUHK)" },
@@ -25,13 +29,30 @@ const DATA_PREFIXES_META = [
   { prefix: 8523411, group: "Hong Kong Baptist University (HKBU)" },
   { prefix: 8523120, group: "Hong Kong Metropolitan University (HKMU)" },
   { prefix: 8523963, group: "The Hang Seng University of Hong Kong (HSUHK)" },
+  { prefix: 8523190, group: "The Education University of Hong Kong (EdUHK)" },
+  { prefix: 8523762, group: "HKU SPACE" },
+  { prefix: 8523928, group: "Vocational Training Council (VTC)" },
+
+  // --- Major Banks & Financial Services ---
+  { prefix: 8523665, group: "ZA Bank" },
+  { prefix: 8523896, group: "Mox Bank" },
+  { prefix: 8523761, group: "WeLab Bank" },
+  { prefix: 8523897, group: "Livi Bank" },
+  { prefix: 8523843, group: "Ant Bank" },
+  { prefix: 8523948, group: "Standard Chartered Bank (Hong Kong)" },
+  { prefix: 8523608, group: "The Bank of East Asia (BEA)" },
 ];
 
 const DATA_PREFIXES = DATA_PREFIXES_META.map(item => item.prefix);
 
 const DATA_SPECIFICS: Record<string, string> = {
-  // --- Traditional Banks ---
+  // --- Traditional & Virtual Banks ---
   "85239882388": "Bank of China (Hong Kong)",
+  "85236653665": "ZA Bank Hotline",
+  "85238963896": "Mox Bank Hotline",
+  "85237618888": "WeLab Bank Hotline",
+  "85238978888": "Livi Bank Hotline",
+  "85238438888": "Ant Bank Hotline",
 
   // --- Other ---
   "85260832065": "Honey Shan"
