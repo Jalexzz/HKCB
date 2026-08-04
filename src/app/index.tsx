@@ -25,8 +25,13 @@ export default function IndexScreen() {
     setIsProcessing(true);
     const newState = !isActive;
 
+    // Define your test range here (or grab them from state/text inputs)
+    const testStartNumber = 85230000000;
+    const testEndNumber = 85230000050; // Smaller range for quicker testing
+
     try {
-      await setBlockStateAndReload(newState, EXTENSION_IDENTIFIER);
+      // Update this call to match the new Expo Module signature
+      await setBlockStateAndReload(newState, testStartNumber, testEndNumber, EXTENSION_IDENTIFIER);
       await AsyncStorage.setItem('shieldStatus', newState ? 'ON' : 'OFF');
       setIsActive(newState);
     } catch (error) {

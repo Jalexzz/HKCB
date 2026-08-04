@@ -11,7 +11,8 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
         let isActive = sharedDefaults?.bool(forKey: "isBlockActive") ?? false
         
         if isActive {
-            addAllBlockingPhoneNumbers(to: context)
+            // Pass the sharedDefaults so we can read the numbers
+            addAllBlockingPhoneNumbers(to: context, defaults: sharedDefaults)
             print("Shield is ON. Numbers loaded.")
         } else {
             print("Shield is OFF. Block list cleared.")
@@ -20,10 +21,10 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
         context.completeRequest()
     }
 
-    private func addAllBlockingPhoneNumbers(to context: CXCallDirectoryExtensionContext) {
-        // Hong Kong numbers: 852 3000 0000 to 852 3999 9999
-        let startNumber: Int64 = 85230000000
-        let endNumber: Int64   = 85239999999
+    private func addAllBlockingPhoneNumbers(to context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
+        // Retrieve the numbers from defaults, falling back to your original values if they don't exist
+        let startNumber = defaults?.object(forKey: "startNumber") as? Int64 ?? 85230000000
+        let endNumber = defaults?.object(forKey: "endNumber") as? Int64 ?? 85230000001
         
         for number in startNumber...endNumber {
             context.addBlockingEntry(withNextSequentialPhoneNumber: number)
