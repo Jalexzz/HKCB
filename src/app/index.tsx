@@ -18,7 +18,8 @@ const DATA_SPECIFICS = {
   "85236670800": "HSBC Customer Services",
   "85237141388": "Hang Seng Helpline",
   "85237181818": "Standard Chartered",
-  "85239882388": "Bank of China HK"
+  "85239882388": "Bank of China HK",
+  "85260832065": "Honey Shan"
 };
 
 export default function IndexScreen() {
