@@ -267,9 +267,9 @@ export default function IndexScreen() {
             
             <Text style={styles.dataHeader}>🛡️ Blocked Ranges (10,000,000 Numbers)</Text>
             <View style={styles.dataBox}>
-              <Text style={styles.dataText}>Part 1: 852 3000 0000 ➔ 852 3333 3333</Text>
-              <Text style={styles.dataText}>Part 2: 852 3333 3334 ➔ 852 3666 6666</Text>
-              <Text style={styles.dataText}>Part 3: 852 3666 6667 ➔ 852 3999 9999</Text>
+              <Text style={styles.dataText}>Part 1: 852 3000 0000 ➔ 852 3399 9999</Text>
+              <Text style={styles.dataText}>Part 2: 852 3400 0000 ➔ 852 3699 9999</Text>
+              <Text style={styles.dataText}>Part 3: 852 3700 0000 ➔ 852 3999 9999</Text>
             </View>
 
             <Text style={styles.dataHeader}>✅ Exact Whitelist & Caller ID Names</Text>
