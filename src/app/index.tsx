@@ -1,15 +1,15 @@
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { setBlockStateAndReload } from '../../modules/my-call-manager';
+import { setBlockStateAndReload } from '../modules/my-call-manager';
 
-const EXTENSION_IDENTIFIER = 'com.jalexzzStudio.hkCallBlocker.call-directory';
+// Ensure this exactly matches your app.json bundleIdentifier
+const BUNDLE_ID = 'com.yourname.hkcallblocker'; 
 
-// --- FRONTEND WHITELIST DATA STATES ---
 const DATA_PREFIXES = [
-  8523505, 8523506, 8523949, 8523408, 8523513, 8523129, // Hospitals
-  8523943, 8523917, 8523442, 8523400, 8523411, 8523963, // Universities
-  8523142, 8523919, 8523821                            // Government
+  8523505, 8523506, 8523949, 8523408, 8523513, 8523129,
+  8523943, 8523917, 8523442, 8523400, 8523411, 8523963,
+  8523142, 8523919, 8523821
 ];
 
 const DATA_SPECIFICS = {
@@ -19,89 +19,98 @@ const DATA_SPECIFICS = {
   "85236670800": "HSBC Customer Services",
   "85237141388": "Hang Seng Helpline",
   "85237181818": "Standard Chartered",
-  "85239882388": "Bank of China HK",
-  "85260832065": "Honey Shan"
+  "85239882388": "Bank of China HK"
 };
 
 export default function IndexScreen() {
-  const [isActive, setIsActive] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [status, setStatus] = useState({ 1: false, 2: false, 3: false });
+  const [processing, setProcessing] = useState({ 1: false, 2: false, 3: false });
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const loadState = async () => {
-      const savedState = await AsyncStorage.getItem('shieldStatus');
-      if (savedState === 'ON') {
-        setIsActive(true);
-      }
+      const p1 = await AsyncStorage.getItem('shield_1');
+      const p2 = await AsyncStorage.getItem('shield_2');
+      const p3 = await AsyncStorage.getItem('shield_3');
+      setStatus({ 1: p1 === 'ON', 2: p2 === 'ON', 3: p3 === 'ON' });
       setIsReady(true);
     };
     loadState();
   }, []);
 
-  const toggleShield = async () => {
-    setIsProcessing(true);
-    const newState = !isActive;
+  const toggleShield = async (part: 1 | 2 | 3) => {
+    setProcessing(prev => ({ ...prev, [part]: true }));
+    const newState = !status[part];
+    
+    // Dynamically targets call-directory-1, 2, or 3 based on the button pressed
+    const identifier = `${BUNDLE_ID}.call-directory-${part}`;
 
     try {
-      // Pass the state flags along with both dynamic datasets directly down the bridge channel
-      await setBlockStateAndReload(newState, EXTENSION_IDENTIFIER, DATA_PREFIXES, DATA_SPECIFICS);
-      await AsyncStorage.setItem('shieldStatus', newState ? 'ON' : 'OFF');
-      setIsActive(newState);
+      await setBlockStateAndReload(newState, identifier, DATA_PREFIXES, DATA_SPECIFICS);
+      await AsyncStorage.setItem(`shield_${part}`, newState ? 'ON' : 'OFF');
+      setStatus(prev => ({ ...prev, [part]: newState }));
     } catch (error) {
       Alert.alert(
-        'Action Required',
-        'Please enable the extension inside iOS Settings > Phone > Call Blocking & Identification.'
+        'Action Required', 
+        `Please enable "HK Blocker (Part ${part})" inside iOS Settings > Phone > Call Blocking.`
       );
     } finally {
-      setIsProcessing(false);
+      setProcessing(prev => ({ ...prev, [part]: false }));
     }
   };
 
   if (!isReady) return null;
 
   return (
-    <View style={[styles.container, isActive ? styles.bgActive : styles.bgInactive]}>
-      <Text style={styles.title}>Dynamic Shield Blocker</Text>
-      <Text style={styles.subtitle}>Whitelists passed directly via Frontend</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Tri-Shield Blocker</Text>
+      <Text style={styles.subtitle}>Memory-optimized multi-extension system</Text>
 
-      <View style={styles.card}>
-        {isProcessing ? (
-          <>
-            <ActivityIndicator size="large" color="#000" />
-            <Text style={[styles.statusText, { marginTop: 10 }]}>Writing to Shared Memory...</Text>
-          </>
-        ) : isActive ? (
-          <Text style={[styles.statusText, { color: 'green' }]}>SHIELD IS LIVE 🛡️</Text>
-        ) : (
-          <Text style={[styles.statusText, { color: 'red' }]}>SHIELD IS INACTIVE</Text>
-        )}
-      </View>
+      {[1, 2, 3].map((part) => {
+        const isActive = status[part as 1 | 2 | 3];
+        const isProc = processing[part as 1 | 2 | 3];
 
-      <TouchableOpacity
-        style={[styles.button, isProcessing && styles.buttonDisabled, isActive ? styles.btnOff : styles.btnOn]}
-        onPress={toggleShield}
-        disabled={isProcessing}
-      >
-        <Text style={styles.buttonText}>
-          {isProcessing ? 'Please wait...' : isActive ? 'Deactivate Shield' : 'Activate Shield'}
-        </Text>
-      </TouchableOpacity>
-    </View>
+        return (
+          <View key={part} style={[styles.card, isActive ? styles.bgActive : styles.bgInactive]}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>Shield Part {part}</Text>
+              {isProc ? (
+                <ActivityIndicator size="small" color="#000" />
+              ) : isActive ? (
+                <Text style={{ color: 'green', fontWeight: 'bold' }}>ON 🛡️</Text>
+              ) : (
+                <Text style={{ color: 'red', fontWeight: 'bold' }}>OFF</Text>
+              )}
+            </View>
+
+            <TouchableOpacity 
+              style={[styles.button, isProc && styles.buttonDisabled, isActive ? styles.btnOff : styles.btnOn]} 
+              onPress={() => toggleShield(part as 1 | 2 | 3)}
+              disabled={isProc}
+            >
+              <Text style={styles.buttonText}>
+                {isProc ? 'Syncing...' : isActive ? 'Deactivate' : 'Activate'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        );
+      })}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 },
-  bgActive: { backgroundColor: '#e6ffe6' },
-  bgInactive: { backgroundColor: '#f9f9f9' },
-  title: { fontSize: 24, fontWeight: 'bold' },
-  subtitle: { fontSize: 14, color: '#555', marginBottom: 40, marginTop: 5 },
-  card: { padding: 30, backgroundColor: '#fff', borderRadius: 15, elevation: 5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8, alignItems: 'center', justifyContent: 'center', width: '100%', height: 150, marginBottom: 40 },
-  statusText: { fontSize: 20, fontWeight: 'bold' },
-  button: { paddingHorizontal: 30, paddingVertical: 18, borderRadius: 30, width: '100%', alignItems: 'center', marginBottom: 20 },
+  container: { flexGrow: 1, alignItems: 'center', paddingVertical: 50, paddingHorizontal: 20 },
+  bgActive: { backgroundColor: '#e6ffe6', borderColor: '#b3ffb3' },
+  bgInactive: { backgroundColor: '#fff', borderColor: '#eee' },
+  title: { fontSize: 26, fontWeight: 'bold' },
+  subtitle: { fontSize: 14, color: '#555', marginBottom: 30, marginTop: 5 },
+  card: { padding: 25, borderRadius: 15, borderWidth: 1, width: '100%', marginBottom: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 5 },
+  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
+  cardTitle: { fontSize: 20, fontWeight: '600' },
+  button: { paddingVertical: 15, borderRadius: 10, alignItems: 'center' },
   btnOn: { backgroundColor: '#007AFF' },
   btnOff: { backgroundColor: '#FF3B30' },
   buttonDisabled: { backgroundColor: '#999' },
-  buttonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' }
+  buttonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' }
 });
