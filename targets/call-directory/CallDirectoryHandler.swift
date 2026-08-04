@@ -24,7 +24,7 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
     private func addAllBlockingPhoneNumbers(to context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
         // Retrieve the numbers from defaults, falling back to your original values if they don't exist
         let startNumber = defaults?.object(forKey: "startNumber") as? Int64 ?? 85230000000
-        let endNumber = defaults?.object(forKey: "endNumber") as? Int64 ?? 85230000001
+        let endNumber = defaults?.object(forKey: "endNumber") as? Int64 ?? 85230000050
         
         for number in startNumber...endNumber {
             context.addBlockingEntry(withNextSequentialPhoneNumber: number)
