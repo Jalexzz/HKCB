@@ -6,94 +6,32 @@ import { setBlockStateAndReload, saveWhitelist } from '../../modules/my-call-man
 const BUNDLE_ID = 'com.jalexzzStudio.hkCallBlocker';
 
 // Institutional prefix blocks with comprehensive descriptive group labels
-// Institutional prefix blocks with comprehensive descriptive group labels
 const DATA_PREFIXES_META = [
   // --- Hospital Authority ---
   { prefix: 8523505, group: "Hospital Authority - Prince of Wales Hospital (Sha Tin)" },
   { prefix: 8523506, group: "Hospital Authority - Queen Elizabeth Hospital Cluster" },
-  { prefix: 8522255, group: "Hospital Authority - Queen Mary Hospital (Pok Fu Lam)" },
   { prefix: 8523949, group: "Hospital Authority - United Christian Hospital (Kwun Tong)" },
   { prefix: 8523408, group: "Hospital Authority - Caritas Medical Centre (Sham Shui Po)" },
   { prefix: 8523513, group: "Hospital Authority - Hong Kong Children's Hospital" },
   { prefix: 8523517, group: "Hospital Authority - Kwong Wah Hospital" },
-  { prefix: 8522990, group: "Hospital Authority - Princess Margaret Hospital" },
-  { prefix: 8522468, group: "Hospital Authority - Tuen Mun Hospital" },
-  { prefix: 8523129, group: "Hospital Authority - North District & Nethersole Hospital" },
+  { prefix: 8523129, group: "Hospital Authority - Kowloon Hospital" },
 
   // --- Universities & Higher Education ---
   { prefix: 8523943, group: "The Chinese University of Hong Kong (CUHK)" },
-  { prefix: 8522859, group: "The University of Hong Kong (HKU) - Main Campus Block 1" },
-  { prefix: 8523917, group: "The University of Hong Kong (HKU) - Main Campus Block 2" },
-  { prefix: 8522358, group: "The Hong Kong University of Science and Technology (HKUST)" },
-  { prefix: 8523469, group: "The Hong Kong University of Science and Technology (HKUST) - Block 2" },
-  { prefix: 8522766, group: "The Hong Kong Polytechnic University (PolyU) - Main Campus" },
-  { prefix: 8523400, group: "The Hong Kong Polytechnic University (PolyU) - Block 2" },
+  { prefix: 8523917, group: "The University of Hong Kong (HKU)" },
+  { prefix: 8523469, group: "The Hong Kong University of Science and Technology (HKUST)" },
+  { prefix: 8523400, group: "The Hong Kong Polytechnic University (PolyU)" },
   { prefix: 8523442, group: "City University of Hong Kong (CityU)" },
   { prefix: 8523411, group: "Hong Kong Baptist University (HKBU)" },
-  { prefix: 8522948, group: "The Education University of Hong Kong (EdUHK)" },
-  { prefix: 8522616, group: "Lingnan University (LU)" },
   { prefix: 8523120, group: "Hong Kong Metropolitan University (HKMU)" },
   { prefix: 8523963, group: "The Hang Seng University of Hong Kong (HSUHK)" },
-  { prefix: 8522806, group: "Hong Kong Shue Yan University (HKSYU)" },
-  { prefix: 8522584, group: "The Hong Kong Academy for Performing Arts (HKAPA)" },
-
-  // --- Government & Public Services ---
-  { prefix: 8523142, group: "Government - 1823 Integrated Call Centre Support" },
-  { prefix: 8523919, group: "Government - Legislative Council Secretariat" },
-  { prefix: 8523821, group: "Government - Immigration Department Administration" },
-  { prefix: 8523594, group: "Government - Inland Revenue Department (IRD)" },
-  { prefix: 8523971, group: "Government - Department of Health Enquiries" },
-  { prefix: 8523162, group: "Government - Housing Department Enquiries" },
-  { prefix: 8523583, group: "Government - Social Welfare Department Hotline" },
-  { prefix: 8523842, group: "Government - Transport Department Licensing" },
-
-  // --- Public Utilities & Infrastructure ---
-  { prefix: 8522678, group: "Utility - CLP Power Hong Kong Customer Services" },
-  { prefix: 8522880, group: "Utility - The Hong Kong and China Gas (Towngas)" },
-  { prefix: 8522887, group: "Utility - HK Electric Customer Services" },
-  { prefix: 8522881, group: "Infrastructure - MTR Corporation Enquiries" }
 ];
 
 const DATA_PREFIXES = DATA_PREFIXES_META.map(item => item.prefix);
 
 const DATA_SPECIFICS: Record<string, string> = {
-  // --- Government & Regulatory Bodies ---
-  "85231015555": "Companies Registry",
-  "85237596888": "Customs & Excise Department Hotline",
-  "85225277177": "Hong Kong Police Force General Hotline",
-  "85236618000": "Hong Kong Police Force Headquarters",
-  "85228788196": "Hong Kong Monetary Authority (HKMA)",
-  "85222842288": "Securities and Futures Commission (SFC)",
-  "85229180102": "Mandatory Provident Fund Schemes Authority (MPFA)",
-  "85229292222": "Consumer Council Hotline",
-  "85225118211": "Equal Opportunities Commission (EOC)",
-  "85234236666": "PCPD Doxxing & Fraud Prevention Hotline",
-  "85227122712": "Housing Authority Hotline",
-  "85228042600": "Transport Department Hotline",
-  "85223432255": "Social Welfare Department Hotline",
-
-  // --- Traditional & Virtual Commercial Banks ---
-  "85222333000": "HSBC Personal Banking Hotline",
-  "85228220228": "Hang Seng Bank Customer Service",
-  "85228868868": "Standard Chartered Hong Kong",
+  // --- Traditional Banks ---
   "85239882388": "Bank of China (Hong Kong)",
-  "85236080000": "The Bank of East Asia (BEA)",
-  "85228600333": "Citibank Hong Kong",
-  "85221895588": "ICBC (Asia) Customer Service",
-  "85227795533": "China Construction Bank (Asia)",
-  "85222908888": "DBS Bank (Hong Kong)",
-  "85228159919": "OCBC Bank (Hong Kong)",
-  "85228288000": "Dah Sing Bank Customer Service",
-  "85228180282": "Shanghai Commercial Bank",
-  "85222876767": "China CITIC Bank International",
-  "85228065050": "Fubon Bank (Hong Kong)",
-  "85222699888": "Bank of Communications (Hong Kong)",
-  "85226280299": "Nanyang Commercial Bank",
-  
-  // --- Virtual Banks ---
-  "85236653665": "ZA Bank (Virtual Bank)",
-  "85238986988": "WeLab Bank (Virtual Bank)",
-  "85229292998": "Livi Bank (Virtual Bank)"
 
   // --- Other ---
   "85260832065": "Honey Shan"
