@@ -42,6 +42,7 @@ const DATA_PREFIXES_META = [
   // --- Public Utilities & Infrastructure ---
   { prefix: 8523833, group: "Utility - CLP Power Hong Kong Customer Services" },
   { prefix: 8523633, group: "Utility - The Hong Kong and China Gas (Towngas)" },
+  { prefix: 8523143, group: "Utility - HK Electric Data Centre & Operations" },
   { prefix: 8523999, group: "Infrastructure - MTR Corporation Hotline" }
 ];
 
@@ -55,6 +56,8 @@ const DATA_SPECIFICS: Record<string, string> = {
   "85228788196": "Hong Kong Monetary Authority (HKMA)",
   "85222842288": "Securities and Futures Commission (SFC)",
   "85229180102": "Mandatory Provident Fund Schemes Authority (MPFA)",
+  "85229292222": "Consumer Council Hotline",
+  "85225118211": "Equal Opportunities Commission (EOC)",
 
   // --- Commercial Banks ---
   "85236670800": "HSBC Customer Services",
