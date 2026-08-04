@@ -34,7 +34,15 @@ const DATA_PREFIXES_META = [
   { prefix: 8523919, group: "Government - Legislative Council Secretariat" },
   { prefix: 8523821, group: "Government - Immigration Department Administration" },
   { prefix: 8523594, group: "Government - Inland Revenue Department (IRD)" },
-  { prefix: 8523971, group: "Government - Department of Health Enquiries" }
+  { prefix: 8523971, group: "Government - Department of Health Enquiries" },
+  { prefix: 8523162, group: "Government - Housing Department Enquiries" },
+  { prefix: 8523583, group: "Government - Social Welfare Department Hotline" },
+  { prefix: 8523842, group: "Government - Transport Department Licensing" },
+
+  // --- Public Utilities & Infrastructure ---
+  { prefix: 8523833, group: "Utility - CLP Power Hong Kong Customer Services" },
+  { prefix: 8523633, group: "Utility - The Hong Kong and China Gas (Towngas)" },
+  { prefix: 8523999, group: "Infrastructure - MTR Corporation Hotline" }
 ];
 
 const DATA_PREFIXES = DATA_PREFIXES_META.map(item => item.prefix);
@@ -59,8 +67,11 @@ const DATA_SPECIFICS: Record<string, string> = {
   "85237982000": "ICBC (Asia)",
   "85237433333": "China Construction Bank (Asia)",
   "85231895588": "OCBC Bank (Hong Kong)",
-  "85232828282": "Dah Sing Bank Customer Service"
-  
+  "85232828282": "Dah Sing Bank Customer Service",
+  "85238230233": "Shanghai Commercial Bank",
+  "85237686888": "China CITIC Bank International",
+  "85237111888": "Fubon Bank (Hong Kong)"
+
   // --- Other ---
   "85260832065": "Honey Shan"
 };
