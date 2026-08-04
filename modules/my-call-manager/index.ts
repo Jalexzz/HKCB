@@ -1,11 +1,16 @@
 import { requireNativeModule } from 'expo-modules-core';
 const MyCallManager = requireNativeModule('MyCallManager');
 
-export async function setBlockStateAndReload(
-  isActive: boolean, 
-  identifier: string,
+export async function saveWhitelist(
   prefixes: number[],
   specifics: Record<string, string>
 ): Promise<boolean> {
-  return await MyCallManager.setBlockStateAndReload(isActive, identifier, prefixes, specifics);
+  return await MyCallManager.saveWhitelist(prefixes, specifics);
+}
+
+export async function setBlockStateAndReload(
+  isActive: boolean,
+  identifier: string
+): Promise<boolean> {
+  return await MyCallManager.setBlockStateAndReload(isActive, identifier);
 }
