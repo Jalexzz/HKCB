@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setBlockStateAndReload } from '../modules/my-call-manager';
 
 // Ensure this exactly matches your app.json bundleIdentifier
-const BUNDLE_ID = 'com.yourname.hkcallblocker'; 
+const BUNDLE_ID = 'com.jalexzzStudio.hkCallBlocker'; 
 
 const DATA_PREFIXES = [
   8523505, 8523506, 8523949, 8523408, 8523513, 8523129,
