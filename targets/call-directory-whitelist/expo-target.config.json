@@ -1,4 +1,5 @@
 {
   "type": "call-directory",
-  "name": "HK Blocker (Caller ID & Whitelist)"
+  "name": "HK Blocker (Caller ID & Whitelist)",
+  "bundleIdentifier": "com.jalexzzStudio.hkCallBlocker.blocker4"
 }

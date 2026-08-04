@@ -2,7 +2,7 @@
   "expo": {
     "name": "HKCallBlocker",
     "slug": "HKCallBlocker",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "hkcallblocker",
@@ -53,23 +53,6 @@
     "extra": {
       "router": {},
       "eas": {
-        "build": {
-          "experimental": {
-            "ios": {
-              "appExtensions": [
-                {
-                  "bundleIdentifier": "com.jalexzzStudio.hkCallBlocker.call-directory",
-                  "targetName": "calldirectory",
-                  "entitlements": {
-                    "com.apple.security.application-groups": [
-                      "group.com.jalexzzStudio.hkCallBlocker"
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        },
         "projectId": "155343e3-b1b0-428c-84dc-86976f41274f"
       }
     },
