@@ -1,5 +1,5 @@
 {
   "type": "call-directory",
-  "name": "HK Blocker 3 (3700 0000 - 3999 9999)",
+  "name": "HKBlocker3",
   "bundleIdentifier": "com.jalexzzStudio.hkCallBlocker.blocker3"
 }
