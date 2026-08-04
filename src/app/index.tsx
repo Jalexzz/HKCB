@@ -6,7 +6,8 @@ import { setBlockStateAndReload, saveWhitelist } from '../../modules/my-call-man
 const BUNDLE_ID = 'com.jalexzzStudio.hkCallBlocker';
 
 // Institutional prefix blocks with comprehensive descriptive group labels
-const DATA_PREFIXES_META = [// --- Hospital Authority ---
+const DATA_PREFIXES_META = [
+  // --- Hospital Authority ---
   { prefix: 8523505, group: "Hospital Authority - Prince of Wales Hospital (Sha Tin)" },
   { prefix: 8523506, group: "Hospital Authority - Queen Elizabeth Hospital Cluster" },
   { prefix: 8523949, group: "Hospital Authority - United Christian Hospital (Kwun Tong)" },
@@ -40,16 +41,6 @@ const DATA_PREFIXES_META = [// --- Hospital Authority ---
   { prefix: 8523988, group: "Bank of China (Hong Kong)" }, 
   { prefix: 8523668, group: "DBS Bank (Marketing/Sales)" },
 
-  // --- Virtual Banks ---
-  { prefix: 8523665, group: "ZA Bank" },
-  { prefix: 8523896, group: "Mox Bank" },
-  { prefix: 8523761, group: "WeLab Bank" },
-  { prefix: 8523897, group: "Livi Bank" },
-  { prefix: 8523843, group: "Ant Bank" },
-  { prefix: 8523718, group: "Airstar Bank" },
-  { prefix: 8523762, group: "Ping An OneConnect Bank (PAOB) / HKU SPACE" }, // Shared block
-  { prefix: 8523187, group: "Fusion Bank (Business)" },
-  
   // --- Law Enforcement & Major Government ---
   { prefix: 8523142, group: "HKSAR Government - 1823 Call Centre (Outbound)" },
   { prefix: 8523152, group: "HKSAR Government - 1823 Call Centre (Outbound)" },
