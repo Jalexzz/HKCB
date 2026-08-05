@@ -12,7 +12,7 @@ export default function IndexScreen() {
 
   // Inputs for range testing
   const [startNumber, setStartNumber] = useState('85230000000');
-  const [endNumber, setEndNumber] = useState('85230000050');
+  const [endNumber, setEndNumber] = useState('85231000000');
 
   useEffect(() => {
     const loadState = async () => {
@@ -96,7 +96,7 @@ export default function IndexScreen() {
             value={endNumber}
             onChangeText={setEndNumber}
             keyboardType="numeric"
-            placeholder="85230000050"
+            placeholder="85231000000"
           />
         </View>
       </View>
