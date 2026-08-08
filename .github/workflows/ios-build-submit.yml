@@ -1,14 +1,12 @@
-name: Build & Submit iOS App
+name: Manual Build & Submit iOS (Master)
 
+# 👇 Exclusively uses workflow_dispatch. It will never run automatically.
 on:
-  push:
-    branches:
-      - deploy
-    paths-ignore:
-      - "**.md"
+  workflow_dispatch:
 
 jobs:
   build-and-submit-ios:
+    # CRITICAL: Must remain macos-latest because we are compiling native iOS code locally
     runs-on: macos-latest
 
     steps:
@@ -31,7 +29,7 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-      - name: 🚀 Build Locally
+      - name: 🚀 Build Locally (iOS)
         run: eas build --platform ios --profile production --local --non-interactive --output ./app.ipa
 
       - name: 📤 Submit to App Store Connect
