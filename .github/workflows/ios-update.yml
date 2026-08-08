@@ -7,7 +7,7 @@ on:
       updateMessage:
         description: "EAS Update Message"
         required: true
-        default: "Manual OTA Update to Master (iOS)"
+        default: "FIX BUG"
 
 jobs:
   publish-update:
