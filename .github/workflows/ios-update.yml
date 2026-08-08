@@ -1,0 +1,48 @@
+name: Publish EAS Update (Master - iOS Only)
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '**.js'
+      - '**.jsx'
+      - '**.ts'
+      - '**.tsx'
+      - '**.json'
+      - 'assets/**'
+  
+  workflow_dispatch:
+    inputs:
+      updateMessage:
+        description: 'EAS Update Message'
+        required: true
+        default: 'Manual OTA Update to Master (iOS)'
+
+jobs:
+  publish-update:
+    runs-on: ubuntu-latest 
+
+    steps:
+      - name: 🏗 Setup repository
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26.x
+          cache: 'npm'
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🚀 Publish EAS Update to Master (iOS Only)
+        # Added --platform ios to explicitly prevent Android from receiving this update
+        run: eas update --branch master --platform ios --message "${{ github.event.inputs.updateMessage || github.event.head_commit.message }}" --non-interactive
