@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { setBlockStateAndReload } from '../../modules/my-call-manager'; // Fixed path for subfolder[cite: 5]
 
 const EXTENSION_IDENTIFIER = 'com.jalexzzStudio.hkCallBlocker.call-directory'; //[cite: 5]
@@ -59,9 +59,9 @@ export default function IndexScreen() {
   if (!isReady) return null; //[cite: 5]
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Call Control Center</Text>
-      <Text style={styles.subtitle}>Independent Whitelist & Modular Block Shields</Text>
+    <View style={[styles.container, isActive ? styles.bgActive : styles.bgInactive]}>
+      <Text style={styles.title}>Persistent Spam Blocker</Text>
+      <Text style={styles.subtitle}>Blocks HK numbers starting with 3</Text>
 
       <View style={styles.card}>
         {isProcessing ? (
@@ -106,116 +106,15 @@ export default function IndexScreen() {
         onPress={toggleShield} //[cite: 5]
         disabled={isProcessing} //[cite: 5]
       >
-        {globalProcessing ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text style={styles.masterButtonText}>⚡ Master Sync & Enable All Shields</Text>
-        )}
+        <Text style={styles.buttonText}>
+          {isProcessing ? 'Please wait...' : isActive ? 'Turn OFF Shield' : 'Turn ON Shield'}
+        </Text>
       </TouchableOpacity>
 
-      {/* --- WHITELIST & CALLER ID CARD --- */}
-      <View style={[styles.card, styles.whitelistCard]}>
-        <View style={styles.cardHeader}>
-          <View>
-            <Text style={styles.cardTitle}>VIP Whitelist & Caller ID</Text>
-            <Text style={styles.cardSubtitle}>Hospitals, Banks, Schools & Gov</Text>
-          </View>
-          {whitelistProcessing ? (
-            <ActivityIndicator size="small" color="#000" />
-          ) : whitelistActive ? (
-            <Text style={{ color: 'green', fontWeight: 'bold' }}>ACTIVE 🟢</Text>
-          ) : (
-            <Text style={{ color: 'red', fontWeight: 'bold' }}>OFF</Text>
-          )}
-        </View>
-
-        <TouchableOpacity 
-          style={[styles.button, whitelistProcessing && styles.buttonDisabled, whitelistActive ? styles.btnOff : styles.btnWhitelist]} 
-          onPress={toggleWhitelist}
-          disabled={whitelistProcessing}
-        >
-          <Text style={styles.buttonText}>
-            {whitelistProcessing ? 'Syncing...' : whitelistActive ? 'Disable Whitelist' : 'Sync & Enable Whitelist'}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <Text style={styles.sectionHeader}>BLOCK SHIELDS (3 PREFIX)</Text>
-
-      {/* --- BLOCKER SHIELD CARDS --- */}
-      {[1, 2, 3].map((part) => {
-        const isActive = status[part as 1 | 2 | 3];
-        const isProc = processing[part as 1 | 2 | 3];
-
-        return (
-          <View key={part} style={[styles.card, isActive ? styles.bgActive : styles.bgInactive]}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Blocker Shield Part {part}</Text>
-              {isProc ? (
-                <ActivityIndicator size="small" color="#000" />
-              ) : isActive ? (
-                <Text style={{ color: 'green', fontWeight: 'bold' }}>ON 🛡️</Text>
-              ) : (
-                <Text style={{ color: 'red', fontWeight: 'bold' }}>OFF</Text>
-              )}
-            </View>
-
-            <TouchableOpacity 
-              style={[styles.button, isProc && styles.buttonDisabled, isActive ? styles.btnOff : styles.btnOn]} 
-              onPress={() => toggleShield(part as 1 | 2 | 3)}
-              disabled={isProc}
-            >
-              <Text style={styles.buttonText}>
-                {isProc ? 'Syncing...' : isActive ? 'Deactivate' : 'Activate Shield'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        );
-      })}
-
-      {/* --- DATABASE OVERVIEW SECTION WITH DESCRIPTIONS --- */}
-      <View style={styles.dataSection}>
-        <TouchableOpacity style={styles.dataToggle} onPress={() => setShowData(!showData)}>
-          <Text style={styles.dataToggleText}>
-            {showData ? 'Hide Database Rules ⬆️' : 'View Database Rules & Descriptions ⬇️'}
-          </Text>
-        </TouchableOpacity>
-
-        {showData && (
-          <View style={styles.dataContent}>
-            
-            <Text style={styles.dataHeader}>🛡️ Blocked Ranges (10,000,000 Numbers)</Text>
-            <View style={styles.dataBox}>
-              <Text style={styles.dataText}>Part 1: 852 3000 0000 ➔ 852 3399 9999</Text>
-              <Text style={styles.dataText}>Part 2: 852 3400 0000 ➔ 852 3699 9999</Text>
-              <Text style={styles.dataText}>Part 3: 852 3700 0000 ➔ 852 3999 9999</Text>
-            </View>
-
-            <Text style={styles.dataHeader}>✅ Exact Whitelist & Caller ID Names</Text>
-            <View style={styles.dataBox}>
-              {Object.entries(DATA_SPECIFICS).map(([number, name]) => (
-                <Text key={number} style={styles.dataText}>
-                  <Text style={styles.boldNum}>{number.replace(/(\d{3})(\d{4})(\d{4})/, '+$1 $2 $3')}</Text> ➔ {name}
-                </Text>
-              ))}
-            </View>
-
-            <Text style={styles.dataHeader}>✅ Allowed Institutional Block Groups</Text>
-            <Text style={styles.dataSubText}>Bypasses blocking for entire 10,000 number prefix blocks:</Text>
-            <View style={styles.dataBox}>
-              {DATA_PREFIXES_META.map(item => (
-                <View key={item.prefix} style={styles.itemRow}>
-                  <Text style={styles.boldNum}>+{item.prefix} XXXX</Text>
-                  <Text style={styles.groupDesc}>{item.group}</Text>
-                </View>
-              ))}
-            </View>
-
-          </View>
-        )}
-      </View>
-      
-    </ScrollView>
+      <Text style={styles.instructions}>
+        When ON, this app continues blocking calls in the background permanently, even if you close the app or restart your phone.
+      </Text>
+    </View>
   );
 }
 
