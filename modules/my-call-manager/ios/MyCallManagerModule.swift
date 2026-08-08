@@ -4,7 +4,7 @@ import CallKit
 public class MyCallManagerModule: Module {
   public func definition() -> ModuleDefinition {
     Name("MyCallManager")
-
+    
     // 1. Dedicated function to save Whitelist data to App Group
     AsyncFunction("saveWhitelist") { (
       prefixes: [Int64], 
@@ -21,14 +21,15 @@ public class MyCallManagerModule: Module {
       }
     }
 
-    // 2. Function to toggle individual extension states
-    AsyncFunction("setBlockStateAndReload") { (
-      isActive: Bool, 
-      identifier: String, 
-      promise: Promise
-    ) in
+    // Update the arguments to include startNumber and endNumber
+    AsyncFunction("setBlockStateAndReload") { (isActive: Bool, startNumber: Int, endNumber: Int, identifier: String, promise: Promise) in
+      
+      // Save state to App Group
       if let sharedDefaults = UserDefaults(suiteName: "group.com.jalexzzStudio.hkCallBlocker") {
-        sharedDefaults.set(isActive, forKey: "isBlockActive_\(identifier)")
+        sharedDefaults.set(isActive, forKey: "isBlockActive")
+        // Save the dynamic numbers
+        sharedDefaults.set(startNumber, forKey: "startNumber")
+        sharedDefaults.set(endNumber, forKey: "endNumber")
         sharedDefaults.synchronize()
       }
       
