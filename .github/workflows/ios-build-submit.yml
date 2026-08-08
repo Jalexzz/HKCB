@@ -2,8 +2,8 @@ name: Build & Submit iOS App
 
 on:
   push:
-    branches: #test
-      - deploy # <--- Exclusively monitors the deploy branch
+    branches:
+      - deploy
     paths-ignore:
       - "**.md"
 
@@ -31,5 +31,8 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-      - name: 🚀 Build Locally and Submit to App Store Connect
-        run: eas build --platform ios --profile production --local --non-interactive --auto-submit
+      - name: 🚀 Build Locally
+        run: eas build --platform ios --profile production --local --non-interactive --output ./app.ipa
+
+      - name: 📤 Submit to App Store Connect
+        run: eas submit --platform ios --profile production --path ./app.ipa --non-interactive
