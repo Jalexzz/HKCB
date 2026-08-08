@@ -1,4 +1,4 @@
-name: Manual Build & Submit iOS (Master)
+name: Build & Submit (iOS Only)
 
 # 👇 Exclusively uses workflow_dispatch. It will never run automatically.
 on:

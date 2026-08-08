@@ -1,4 +1,4 @@
-name: Publish EAS Update (Master - iOS Only)
+name: EAS Update (iOS Only)
 
 # 👇 The push block is completely removed. It will NEVER run automatically now.
 on:
