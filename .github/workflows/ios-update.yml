@@ -1,27 +1,17 @@
 name: Publish EAS Update (Master - iOS Only)
 
+# 👇 The push block is completely removed. It will NEVER run automatically now.
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - '**.js'
-      - '**.jsx'
-      - '**.ts'
-      - '**.tsx'
-      - '**.json'
-      - 'assets/**'
-  
   workflow_dispatch:
     inputs:
       updateMessage:
-        description: 'EAS Update Message'
+        description: "EAS Update Message"
         required: true
-        default: 'Manual OTA Update to Master (iOS)'
+        default: "Manual OTA Update to Master (iOS)"
 
 jobs:
   publish-update:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
     steps:
       - name: 🏗 Setup repository
@@ -31,7 +21,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 26.x
-          cache: 'npm'
+          cache: "npm"
 
       - name: 🏗 Setup Expo and EAS
         uses: expo/expo-github-action@v8
@@ -44,5 +34,5 @@ jobs:
         run: npm install
 
       - name: 🚀 Publish EAS Update to Master (iOS Only)
-        # Added --platform ios to explicitly prevent Android from receiving this update
-        run: eas update --branch master --platform ios --message "${{ github.event.inputs.updateMessage || github.event.head_commit.message }}" --non-interactive
+        # Because there is no push trigger, it will strictly use your manual input message
+        run: eas update --branch master --platform ios --message "${{ github.event.inputs.updateMessage }}" --non-interactive
