@@ -2,7 +2,7 @@ name: Build & Submit iOS App
 
 on:
   push:
-    branches:
+    branches: #test
       - deploy # <--- Exclusively monitors the deploy branch
     paths-ignore:
       - "**.md"
