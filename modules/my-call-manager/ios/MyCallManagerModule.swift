@@ -26,7 +26,7 @@ public class MyCallManagerModule: Module {
       
       // Save state to App Group
       if let sharedDefaults = UserDefaults(suiteName: "group.com.jalexzzStudio.hkCallBlocker") {
-        sharedDefaults.set(isActive, forKey: "isBlockActive")
+        sharedDefaults.set(isActive, forKey: "isBlockActive_\(identifier)")
         // Save the dynamic numbers
         sharedDefaults.set(startNumber, forKey: "startNumber")
         sharedDefaults.set(endNumber, forKey: "endNumber")
