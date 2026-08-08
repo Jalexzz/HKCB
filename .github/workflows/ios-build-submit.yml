@@ -3,7 +3,7 @@ name: Build & Submit iOS App
 on:
   push:
     branches:
-      - deploy # <--- Exclusively monitors the deploy branch
+      - deploy
     paths-ignore:
       - "**.md"
 
@@ -18,7 +18,7 @@ jobs:
       - name: 🏗 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: 26.x
           cache: "npm"
 
       - name: 🏗 Setup Expo and EAS
@@ -31,5 +31,8 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-      - name: 🚀 Build Locally and Submit to App Store Connect
-        run: eas build --platform ios --profile production --local --non-interactive --auto-submit
+      - name: 🚀 Build Locally
+        run: eas build --platform ios --profile production --local --non-interactive --output ./app.ipa
+
+      - name: 📤 Submit to App Store Connect
+        run: eas submit --platform ios --profile production --path ./app.ipa --non-interactive
