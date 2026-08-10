@@ -33,4 +33,4 @@ jobs:
         run: eas build --platform ios --profile production --local --non-interactive --output ./app.ipa
 
       - name: 📤 Submit to App Store Connect
-        run: eas submit --platform ios --profile production --path ./app.ipa --non-interactive
+        run: eas submit --platform ios --profile production --path ./app.ipa --non-interactive --no-wait
