@@ -14,7 +14,7 @@ App Store Promo Text (Max 170) / Google Play Short Desc (Max 80) /
 Keywords (Max 100) / Full Description /
 主要語言 / 類別
 
-generate a icon for upload(no need text on logo)
+generate a icon for upload('3字頭攔截器' text on logo)
    
 https://github.com/Jalexzz/hk-call-blocker-privacy
    
