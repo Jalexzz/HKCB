@@ -1,0 +1,9 @@
+{
+  "type": "call-directory",
+  "name": "HK Call Blocker 1",
+  "entitlements": {
+    "com.apple.security.application-groups": [
+      "group.com.jalexzzStudio.hkCallBlocker"
+    ]
+  }
+}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { setBlockStateAndReload } from '../../modules/my-call-manager'; // Fixed path for subfolder[cite: 5]
 
-const EXTENSION_IDENTIFIER = 'com.jalexzzStudio.hkCallBlocker.call-directory'; //[cite: 5]
+const EXTENSION_IDENTIFIER = 'com.jalexzzStudio.hkCallBlocker.call-directory-1'; //[cite: 5]
 
 export default function IndexScreen() {
   const [isActive, setIsActive] = useState(false); //[cite: 5]
