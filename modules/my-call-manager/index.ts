@@ -1,12 +1,7 @@
 import { requireNativeModule } from 'expo-modules-core';
-const MyCallManager = requireNativeModule('MyCallManager');
 
-export async function saveWhitelist(
-  prefixes: number[],
-  specifics: Record<string, string>
-): Promise<boolean> {
-  return await MyCallManager.saveWhitelist(prefixes, specifics);
-}
+// This links directly to the name defined in your Swift file: Name("MyCallManager")
+const MyCallManager = requireNativeModule('MyCallManager');
 
 export async function setBlockStateAndReload(
   isActive: boolean,
