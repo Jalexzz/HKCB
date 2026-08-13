@@ -7,7 +7,7 @@ Feature
 - User can manual remove the white list if needed.
 
 help me write submit info for App store and Google Play 
-please provide all lang en/de/es/fr/ja/ko/pt-BR/ru/zh-CN/zh
+please provide all lang en/zh-CN/zh
 include:
 App Name (Max 30) / App Store Subtitle (Max 30) / 
 App Store Promo Text (Max 170) / Google Play Short Desc (Max 80) /
@@ -16,7 +16,7 @@ Keywords (Max 100) / Full Description /
 
 generate a icon for upload(no need text on logo)
    
-https://github.com/Jalexzz/milk-tap-privacy
+https://github.com/Jalexzz/hk-call-blocker-privacy
    
 Copyright: © 2026 Jalexzz Studio
 
