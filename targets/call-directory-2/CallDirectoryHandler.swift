@@ -6,25 +6,25 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
         context.delegate = self
         
         let sharedDefaults = UserDefaults(suiteName: "group.com.jalexzzStudio.hkCallBlocker")
-        
-        // Check if the user turned the shield ON or OFF
         let isActive = sharedDefaults?.bool(forKey: "isBlockActive") ?? false
         
         if isActive {
-            // Pass the sharedDefaults so we can read the numbers
             addBatch2Numbers(to: context, defaults: sharedDefaults)
-            print("Shield is ON. Numbers loaded.")
-        } else {
-            print("Shield is OFF. Block list cleared.")
         }
         
         context.completeRequest()
     }
 
     private func addBatch2Numbers(to context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
-        // Retrieve the numbers from defaults, falling back to your original values if they don't exist
-        let startNumber = defaults?.object(forKey: "startNumber") as? Int64 ?? 85230000000
-        let endNumber = defaults?.object(forKey: "endNumber") as? Int64 ?? 85230000050
+        // Read via integer(forKey:) to ensure valid conversion
+        let startRaw = defaults?.integer(forKey: "startNumber") ?? 0
+        let endRaw = defaults?.integer(forKey: "endNumber") ?? 0
+        
+        let startNumber: Int64 = startRaw != 0 ? Int64(startRaw) : 85230000000
+        let endNumber: Int64 = endRaw != 0 ? Int64(endRaw) : 85230000050
+        
+        // CallKit requires numbers to be added in strictly ascending order
+        guard startNumber <= endNumber else { return }
         
         for number in startNumber...endNumber {
             context.addBlockingEntry(withNextSequentialPhoneNumber: number)
