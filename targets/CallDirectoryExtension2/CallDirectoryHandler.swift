@@ -20,8 +20,8 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
         let startRaw = defaults?.integer(forKey: "batch2StartNumber") ?? 0
         let endRaw = defaults?.integer(forKey: "batch2EndNumber") ?? 0
         
-        let startNumber: Int64 = startRaw != 0 ? Int64(startRaw) : 85230000000
-        let endNumber: Int64 = endRaw != 0 ? Int64(endRaw) : 85230000050
+        let startNumber: Int64 = startRaw != 0 ? Int64(startRaw) : 85230000050
+        let endNumber: Int64 = endRaw != 0 ? Int64(endRaw) : 85230000100
         
         // CallKit requires numbers to be added in strictly ascending order
         guard startNumber <= endNumber else { return }
