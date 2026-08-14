@@ -28,7 +28,10 @@ jobs:
 
       - name: 📦 Install dependencies
         run: npm install
-
+      
+      - name: 🔍 Debug Targets Directory
+        run: ls -la targets
+        
       - name: 🚀 Build Locally (iOS)
         run: eas build --platform ios --profile production --local --non-interactive --output ./app.ipa
 
