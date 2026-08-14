@@ -1,7 +1,7 @@
 {
   "type": "call-directory",
-  "name": "HKCallBlocker2",
-  "bundleId": "com.jalexzzStudio.hkCallBlocker.call-directory-2",
+  "name": "CallDirectoryExtension1",
+  "bundleId": "com.jalexzzStudio.hkCallBlocker.CallDirectoryExtension1",
   "entitlements": {
     "com.apple.security.application-groups": [
       "group.com.jalexzzStudio.hkCallBlocker"
