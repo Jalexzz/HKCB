@@ -1,0 +1,33 @@
+name: EAS Prebuild (iOS Only)
+
+# 👇 The push block is completely removed. It will NEVER run automatically now.
+on:
+  workflow_dispatch:
+
+jobs:
+  prebuild:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🏗 Setup repository
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26.x
+          cache: "npm"
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🚀 Prebuild (iOS Only)
+        # Because there is no push trigger, it will strictly use your manual input message
+        run: npx expo prebuild --platform ios --clean
