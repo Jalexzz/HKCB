@@ -9,16 +9,16 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
         let isActive = sharedDefaults?.bool(forKey: "isBlockActive") ?? false
         
         if isActive {
-            addBatch1Numbers(to: context, defaults: sharedDefaults)
+            addBatchNumbers(to: context, defaults: sharedDefaults)
         }
         
         context.completeRequest()
     }
 
-    private func addBatch1Numbers(to context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
+    private func addBatchNumbers(to context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
         // Read via integer(forKey:) to ensure valid conversion
-        let startRaw = defaults?.integer(forKey: "batch1StartNumber") ?? 0
-        let endRaw = defaults?.integer(forKey: "batch1EndNumber") ?? 0
+        let startRaw = defaults?.integer(forKey: "startNumber") ?? 0
+        let endRaw = defaults?.integer(forKey: "endNumber") ?? 0
         
         let startNumber: Int64 = startRaw != 0 ? Int64(startRaw) : 85230000000
         let endNumber: Int64 = endRaw != 0 ? Int64(endRaw) : 85230000050
