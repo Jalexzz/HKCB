@@ -8,7 +8,13 @@
     "scheme": "hkcallblocker",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "bundleIdentifier": "com.jalexzzStudio.hkCallBlocker",
       "appleTeamId": "2956VJGZ8R",
+      "entitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.jalexzzStudio.hkCallBlocker"
+        ]
+      },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
