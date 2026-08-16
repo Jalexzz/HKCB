@@ -2,7 +2,7 @@
   "expo": {
     "name": "HKCallBlocker",
     "slug": "HKCallBlocker",
-    "version": "1.5.4",
+    "version": "1.5.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "hkcallblocker",
@@ -39,10 +39,6 @@
         }
       ],
       "@bacons/apple-targets",
-      [
-        "@bacons/apple-targets",
-        "./SecondCallDirectory/expo-target.config.js"
-      ],
       "expo-image",
       "expo-font",
       "expo-web-browser"
