@@ -25,6 +25,12 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
+      - name: Clear iOS cache artifacts
+        run: |
+          rm -rf ios
+          rm -rf .expo
+          rm -rf node_modules
+    
       - name: 📦 Install dependencies
         run: npm install
 
