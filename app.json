@@ -41,7 +41,6 @@
       "@bacons/apple-targets",
       "expo-image",
       "expo-font",
-      "expo-status-bar",
       "expo-web-browser"
     ],
     "experiments": {
