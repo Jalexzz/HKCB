@@ -39,6 +39,10 @@
         }
       ],
       "@bacons/apple-targets",
+      [
+        "@bacons/apple-targets",
+        "./SecondCallDirectory/expo-target.config.js"
+      ],
       "expo-image",
       "expo-font",
       "expo-web-browser"
