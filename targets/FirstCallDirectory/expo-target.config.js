@@ -2,7 +2,7 @@
 module.exports = config => ({
   type: "call-directory",
   name: "FirstCallDirectory", // Must be unique
-  bundleIdentifier: "com.jalexzzStudio.hkCallBlocker.FirstCallDirectory",
+  //bundleIdentifier: "com.jalexzzStudio.hkCallBlocker.FirstCallDirectory",
   entitlements: {
     "com.apple.security.application-groups": [
       "group.com.jalexzzStudio.hkCallBlocker"
