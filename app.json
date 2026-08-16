@@ -38,14 +38,7 @@
           "imageWidth": 76
         }
       ],
-      [
-        "@bacons/apple-targets",
-        "./FirstCallDirectory/expo-target.config.js"
-      ],
-      [
-        "@bacons/apple-targets",
-        "./SecondCallDirectory/expo-target.config.js"
-      ],
+      "@bacons/apple-targets",
       "expo-image",
       "expo-font",
       "expo-web-browser"
