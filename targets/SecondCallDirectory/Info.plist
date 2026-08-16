@@ -7,7 +7,7 @@
       <key>NSExtensionPointIdentifier</key>
       <string>com.apple.callkit.call-directory</string>
       <key>NSExtensionPrincipalClass</key>
-      <string>com.jalexzzStudio.hkCallBlocker.SecondCallDirectory.CallDirectoryHandler</string>
+      <string>$(PRODUCT_MODULE_NAME).CallDirectoryHandler</string>
     </dict>
   </dict>
 </plist>
