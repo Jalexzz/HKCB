@@ -12,7 +12,7 @@
       "appleTeamId": "2956VJGZ8R",
       "entitlements": {
         "com.apple.security.application-groups": [
-          "group.com.jalexzzStudio.hkCallBlocker"
+          "group.com.jalexzzStudio.hkCallBlocker.coaddata"
         ]
       },
       "infoPlist": {
@@ -41,7 +41,8 @@
       "@bacons/apple-targets",
       "expo-image",
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-status-bar"
     ],
     "experiments": {
       "typedRoutes": true,
