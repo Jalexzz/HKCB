@@ -37,6 +37,14 @@ jobs:
       - name: Remove existing native directories
         run: rm -rf ios android
 
+      - name: Debug Target Configs
+        run: |
+          find targets -type f
+          echo "--- First target config ---"
+          cat targets/FirstCallDirectory/expo-target.config.js
+          echo "--- Second target config ---"
+          cat targets/SecondCallDirectory/expo-target.config.js
+
       - name: 🚀 Prebuild (iOS Only)
         # Because there is no push trigger, it will strictly use your manual input message
         run: npx expo prebuild --platform ios --clean
