@@ -1,4 +1,4 @@
-module.exports = config => ({
+module.exports = {
   type: "call-directory",
   deploymentTarget: "16.4",
   name: "SecondCallDirectory",
@@ -8,4 +8,4 @@ module.exports = config => ({
       "group.com.jalexzzStudio.hkCallBlocker.coaddata"
     ]
   }
-});
+};
