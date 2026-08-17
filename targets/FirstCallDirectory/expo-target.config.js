@@ -5,7 +5,7 @@ module.exports = {
   bundleIdentifier: "com.jalexzzStudio.hkCallBlocker.FirstCallDirectory",
   entitlements: {
     "com.apple.security.application-groups": [
-      "group.com.jalexzzStudio.hkCallBlocker.coaddata"
+      "group.com.jalexzzStudio.hkCallBlocker"
     ]
   }
 };
