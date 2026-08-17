@@ -32,6 +32,6 @@ class SecondCallDirectoryHandler: CXCallDirectoryProvider {
     }
 }
 
-extension CallDirectoryHandler: CXCallDirectoryExtensionContextDelegate {
+extension SecondCallDirectoryHandler: CXCallDirectoryExtensionContextDelegate {
     func requestFailed(for extensionContext: CXCallDirectoryExtensionContext, withError error: Error) {}
 }
