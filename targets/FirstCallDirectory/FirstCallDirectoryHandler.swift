@@ -2,6 +2,7 @@ import Foundation
 import CallKit
 
 class FirstCallDirectoryHandler: CXCallDirectoryProvider {
+    
     override func beginRequest(with context: CXCallDirectoryExtensionContext) {
         context.delegate = self
         
@@ -9,29 +10,41 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
         let isActive = sharedDefaults?.bool(forKey: "isBlockActive") ?? false
         
         if isActive {
-            addBatchNumbers(to: context, defaults: sharedDefaults)
+            // Process 10 million numbers in batch ranges
+            blockTenMillionNumbers(context: context, defaults: sharedDefaults)
         }
         
         context.completeRequest()
     }
 
-    private func addBatchNumbers(to context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
-        // Read via integer(forKey:) to ensure valid conversion
+    private func blockTenMillionNumbers(context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
+        // Read start prefix or range parameters from shared app group
         let startRaw = defaults?.integer(forKey: "startNumber") ?? 0
-        let endRaw = defaults?.integer(forKey: "endNumber") ?? 0
+        let baseNumber: Int64 = startRaw != 0 ? Int64(startRaw) : 85230000000
         
-        let startNumber: Int64 = startRaw != 0 ? Int64(startRaw) : 85230000000
-        let endNumber: Int64 = endRaw != 0 ? Int64(endRaw) : 85230000050
+        // Block 10,000,000 sequential phone numbers (e.g. 85230000000 to 85239999999)
+        let totalCount: Int64 = 10_000_000
+        let batchSize: Int64 = 100_000
         
-        // CallKit requires numbers to be added in strictly ascending order
-        guard startNumber <= endNumber else { return }
+        var currentOffset: Int64 = 0
         
-        for number in startNumber...endNumber {
-            context.addBlockingEntry(withNextSequentialPhoneNumber: number)
+        while currentOffset < totalCount {
+            // Autoreleasepool flushes memory after each 100k batch
+            autoreleasepool {
+                let batchStart = baseNumber + currentOffset
+                let batchEnd = min(batchStart + batchSize - 1, baseNumber + totalCount - 1)
+                
+                for number in batchStart...batchEnd {
+                    context.addBlockingEntry(withNextSequentialPhoneNumber: number)
+                }
+            }
+            currentOffset += batchSize
         }
     }
 }
 
 extension FirstCallDirectoryHandler: CXCallDirectoryExtensionContextDelegate {
-    func requestFailed(for extensionContext: CXCallDirectoryExtensionContext, withError error: Error) {}
+    func requestFailed(for extensionContext: CXCallDirectoryExtensionContext, withError error: Error) {
+        // Handle extension error
+    }
 }
