@@ -19,7 +19,7 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
 
     private func blockTenMillionNumbers(context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
         // Read start prefix or range parameters from shared app group
-        let startRaw = defaults?.integer(forKey: "startNumber") ?? 0
+        let startRaw = defaults?.integer(forKey: "startNumber") ?? 9999999
         let baseNumber: Int64 = startRaw != 0 ? Int64(startRaw) : 85230000000
         
         // Block 10,000,000 sequential phone numbers (e.g. 85230000000 to 85239999999)
