@@ -45,15 +45,15 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
 */
         
         // ⚠️ CHANGE THESE TWO VARIABLES IN EACH OF THE 3 FOLDERS ⚠️
-        let startNumber = defaults?.integer(forKey: "startNumber") ?? 85230000000
-        let endNumber = defaults?.integer(forKey: "endNumber") ?? 85230000001
+        let startNumber: Int64 = Int64(defaults?.integer(forKey: "startNumber") ?? 85230000000)
+        let endNumber: Int64 = Int64(defaults?.integer(forKey: "endNumber") ?? 85230000001)
         
-        let chunkSize = 100000
-        var currentStart = startNumber
+        let chunkSize: Int64 = 100000
+        var currentStart: Int64 = startNumber
         
         while currentStart <= endNumber {
             autoreleasepool {
-                let currentEnd = min(currentStart + chunkSize, endNumber)
+                let currentEnd: Int64 = min(currentStart + chunkSize, endNumber)
                 for number in currentStart...currentEnd {
                     
                     //if whitelistKeys.contains(number) { continue }
