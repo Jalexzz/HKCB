@@ -18,6 +18,8 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
     }
 
     private func blockTenMillionNumbers(context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
+       
+       /*
         // Read start prefix or range parameters from shared app group
         let startRaw = defaults?.integer(forKey: "startNumber") ?? 0
         let baseNumber: Int64 = startRaw != 0 ? Int64(startRaw) : 85230000000
@@ -39,6 +41,29 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
                 }
             }
             currentOffset += batchSize
+        }
+*/
+        
+        // ⚠️ CHANGE THESE TWO VARIABLES IN EACH OF THE 3 FOLDERS ⚠️
+        let startNumber = defaults?.integer(forKey: "startNumber") ?? 85230000000
+        let endNumber = defaults?.integer(forKey: "endNumber") ?? 85230000001
+        
+        let chunkSize: Int64   = 100000
+        var currentStart = startNumber
+        
+        while currentStart <= endNumber {
+            autoreleasepool {
+                let currentEnd = min(currentStart + chunkSize, endNumber)
+                for number in currentStart...currentEnd {
+                    
+                    //if whitelistKeys.contains(number) { continue }
+                    //let prefixBlock = number / 10000
+                    //if prefixes.contains(prefixBlock) { continue }
+                    
+                    context.addBlockingEntry(withNextSequentialPhoneNumber: number)
+                }
+                currentStart = currentEnd + 1
+            }
         }
     }
 }
