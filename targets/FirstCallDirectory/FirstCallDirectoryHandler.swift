@@ -48,7 +48,7 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
         let startNumber = defaults?.integer(forKey: "startNumber") ?? 85230000000
         let endNumber = defaults?.integer(forKey: "endNumber") ?? 85230000001
         
-        let chunkSize: Int64   = 100000
+        let chunkSize = 100000
         var currentStart = startNumber
         
         while currentStart <= endNumber {
