@@ -2,7 +2,7 @@
   "expo": {
     "name": "HKCallBlocker",
     "slug": "HKCallBlocker",
-    "version": "1.5.8",
+    "version": "1.5.9",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "hkcallblocker",
