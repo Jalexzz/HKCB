@@ -58,7 +58,21 @@ const DATA_PREFIXES_META = [
 
 const DATA_PREFIXES = DATA_PREFIXES_META.map(item => item.prefix);
 
-const DATA_SPECIFICS = {};
+const DATA_SPECIFICS: Record<string, string> = {
+  // --- Traditional & Virtual Banks ---
+  "85239882388": "Bank of China (Hong Kong)",
+  "85236653665": "ZA Bank Hotline",
+  "85238963896": "Mox Bank Hotline",
+  "85237618888": "WeLab Bank Hotline",
+  "85238978888": "Livi Bank Hotline",
+  "85238438888": "Ant Bank Hotline",
+
+  // --- Specific Government & Public Main Lines ---
+  "85239193333": "Legislative Council Secretariat",
+
+  // --- Other ---
+  "85260832065": "Honey Shan"
+};
 
 export default function IndexScreen() {
   const [isActive, setIsActive] = useState(false); //
@@ -128,7 +142,7 @@ export default function IndexScreen() {
             <Text style={[styles.statusText, { marginTop: 10 }]}>Syncing numbers...</Text>
           </>
         ) : isActive ? (
-          <Text style={[styles.statusText, { color: 'green' }]}>SHIELD IS ON 🛡️</Text> //
+          <Text style={[styles.statusText, { color: 'green' }]}>SHIELD IS ON ?</Text> //
         ) : (
           <Text style={[styles.statusText, { color: 'red' }]}>SHIELD IS OFF</Text> //
         )}
@@ -174,23 +188,23 @@ export default function IndexScreen() {
 
       {true && (
         <View style={styles.dataContent}>
-          <Text style={styles.dataHeader}>🛡️ Blocked Ranges (10,000,000 Numbers)</Text>
+          <Text style={styles.dataHeader}>? Blocked Ranges (10,000,000 Numbers)</Text>
           <View style={styles.dataBox}>
-            <Text style={styles.dataText}>Part 1: 852 3000 0000 ➔ 852 3399 9999</Text>
-            <Text style={styles.dataText}>Part 2: 852 3400 0000 ➔ 852 3699 9999</Text>
-            <Text style={styles.dataText}>Part 3: 852 3700 0000 ➔ 852 3999 9999</Text>
+            <Text style={styles.dataText}>Part 1: 852 3000 0000 ? 852 3399 9999</Text>
+            <Text style={styles.dataText}>Part 2: 852 3400 0000 ? 852 3699 9999</Text>
+            <Text style={styles.dataText}>Part 3: 852 3700 0000 ? 852 3999 9999</Text>
           </View>
 
-          <Text style={styles.dataHeader}>✅ Exact Whitelist & Caller ID Names</Text>
+          <Text style={styles.dataHeader}>? Exact Whitelist & Caller ID Names</Text>
           <View style={styles.dataBox}>
             {Object.entries(DATA_SPECIFICS).map(([number, name]) => (
               <Text key={number} style={styles.dataText}>
-                <Text style={styles.boldNum}>{number.replace(/(\d{3})(\d{4})(\d{4})/, '+$1 $2 $3')}</Text> ➔ {name}
+                <Text style={styles.boldNum}>{number.replace(/(\d{3})(\d{4})(\d{4})/, '+$1 $2 $3')}</Text> ? {name}
               </Text>
             ))}
           </View>
 
-          <Text style={styles.dataHeader}>✅ Allowed Institutional Block Groups</Text>
+          <Text style={styles.dataHeader}>? Allowed Institutional Block Groups</Text>
           <Text style={styles.dataSubText}>Bypasses blocking for entire 10,000 number prefix blocks:</Text>
           <View style={styles.dataBox}>
             {DATA_PREFIXES_META.map(item => (
