@@ -111,6 +111,10 @@ export default function IndexScreen() {
     const newState = !isActive; //
 
     try {
+      Alert.alert(
+        'Param',
+        `Start: ${parsedStart}, End: ${parsedEnd}, New State: ${newState ? 'ON' : 'OFF'}` //
+      );
       await setBlockStateAndReload(newState, parsedStart, parsedEnd, EXTENSION_IDENTIFIER);
       await AsyncStorage.setItem('shieldStatus', newState ? 'ON' : 'OFF'); //
       setIsActive(newState); //
