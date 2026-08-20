@@ -12,64 +12,36 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
         let isActive = sharedDefaults?.bool(forKey: "isBlockActive") ?? false
         
         if isActive {
-            // Process 10 million numbers in batch ranges
-            blockTenMillionNumbers(context: context, defaults: sharedDefaults)
+            blockNumbers(context: context, defaults: sharedDefaults)
         }
         
         context.completeRequest()
     }
 
-    private func blockTenMillionNumbers(context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
-       
-       /*
-        // Read start prefix or range parameters from shared app group
-        let startRaw = defaults?.integer(forKey: "startNumber") ?? 9999999
-        let baseNumber: Int64 = startRaw != 0 ? Int64(startRaw) : 85230000000
-        
-        // Block 10,000,000 sequential phone numbers (e.g. 85230000000 to 85239999999)
-        let totalCount: Int64 = 10_000_000
-        let batchSize: Int64 = 100_000
-        
-        var currentOffset: Int64 = 0
-        
-        while currentOffset < totalCount {
-            // Autoreleasepool flushes memory after each 100k batch
-            autoreleasepool {
-                let batchStart = baseNumber + currentOffset
-                let batchEnd = min(batchStart + batchSize - 1, baseNumber + totalCount - 1)
-                
-                for number in batchStart...batchEnd {
-                    context.addBlockingEntry(withNextSequentialPhoneNumber: number)
-                }
-            }
-            currentOffset += batchSize
-        }
-*/
-        
-        // Read the raw integer; if it's completely missing or App Group fails, it defaults to 0
-        let rawStart = defaults?.integer(forKey: "startNumber") ?? 0
-        let rawEnd = defaults?.integer(forKey: "endNumber") ?? 0
+    private func blockNumbers(context: CXCallDirectoryExtensionContext, defaults: UserDefaults?) {
+    // 1. Safely retrieve Int64 values from UserDefaults
+    let rawStart = (defaults?.object(forKey: "startNumber") as? Int64) ?? 0
+    let rawEnd = (defaults?.object(forKey: "endNumber") as? Int64) ?? 0
 
-        // Manually apply your fallbacks if the value is 0
-        let startNumber: Int64 = rawStart == 0 ? 85230000000 : Int64(rawStart)
-        let endNumber: Int64 = rawEnd == 0 ? 85230000001 : Int64(rawEnd)
-        
-        let chunkSize: Int64 = 100000
-        var currentStart: Int64 = startNumber
-        
-        while currentStart <= endNumber {
-            autoreleasepool {
-                let currentEnd: Int64 = min(currentStart + chunkSize, endNumber)
-                for number in currentStart...currentEnd {
-                    
-                    //if whitelistKeys.contains(number) { continue }
-                    //let prefixBlock = number / 10000
-                    //if prefixes.contains(prefixBlock) { continue }
-                    
-                    context.addBlockingEntry(withNextSequentialPhoneNumber: number)
-                }
-                currentStart = currentEnd + 1
+    let startNumber: Int64 = rawStart == 0 ? 85230000000 : rawStart
+    let endNumber: Int64 = rawEnd == 0 ? 85230000001 : rawEnd
+
+    // 2. Prevent invalid range crashes
+    guard startNumber <= endNumber else { return }
+
+    let chunkSize: Int64 = 100_000
+    var currentStart: Int64 = startNumber
+
+    while currentStart <= endNumber {
+        autoreleasepool {
+            // 3. Corrected chunk end offset (-1)
+            let currentEnd: Int64 = min(currentStart + chunkSize - 1, endNumber)
+            
+            for number in currentStart...currentEnd {
+                context.addBlockingEntry(withNextSequentialPhoneNumber: number)
             }
+            
+            currentStart = currentEnd + 1
         }
     }
 }
