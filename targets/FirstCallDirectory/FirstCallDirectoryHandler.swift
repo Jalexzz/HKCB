@@ -6,6 +6,8 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
     override func beginRequest(with context: CXCallDirectoryExtensionContext) {
         context.delegate = self
         
+        context.removeAllBlockingEntries()
+        
         let sharedDefaults = UserDefaults(suiteName: "group.com.jalexzzStudio.hkCallBlocker")
         let isActive = sharedDefaults?.bool(forKey: "isBlockActive") ?? false
         
