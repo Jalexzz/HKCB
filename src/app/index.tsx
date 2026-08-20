@@ -80,7 +80,7 @@ export default function IndexScreen() {
   const [isReady, setIsReady] = useState(false); //
 
   const [startNumber, setStartNumber] = useState('85230000000');
-  const [endNumber, setEndNumber] = useState('85231000000');
+  const [endNumber, setEndNumber] = useState('85230000010');
 
   useEffect(() => {
     const loadState = async () => {
@@ -127,7 +127,7 @@ export default function IndexScreen() {
   if (!isReady) return null; //
 
   return (
-    <ScrollView 
+    <ScrollView
       style={[isActive ? styles.bgActive : styles.bgInactive]} //
       contentContainerStyle={styles.container} //
       keyboardShouldPersistTaps="handled"
@@ -167,7 +167,7 @@ export default function IndexScreen() {
             value={endNumber}
             onChangeText={setEndNumber}
             keyboardType="numeric"
-            placeholder="85231000000"
+            placeholder="85230000010"
           />
         </View>
       </View>
