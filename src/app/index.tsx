@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { setBlockStateAndReload } from '../../modules/my-call-manager'; // Fixed path for subfolder[cite: 5]
+import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { setBlockStateAndReload } from '../../modules/my-call-manager'; // Fixed path for subfolder
 
-const EXTENSION_IDENTIFIER = 'com.jalexzzStudio.hkCallBlocker.FirstCallDirectory'; //[cite: 5]
+const EXTENSION_IDENTIFIER = 'com.jalexzzStudio.hkCallBlocker.FirstCallDirectory'; //
 
 // Institutional prefix blocks with comprehensive descriptive group labels
 const DATA_PREFIXES_META = [
@@ -58,38 +58,23 @@ const DATA_PREFIXES_META = [
 
 const DATA_PREFIXES = DATA_PREFIXES_META.map(item => item.prefix);
 
-const DATA_SPECIFICS: Record<string, string> = {
-  // --- Traditional & Virtual Banks ---
-  // "85239882388": "Bank of China (Hong Kong)",
-  // "85236653665": "ZA Bank Hotline",
-  // "85238963896": "Mox Bank Hotline",
-  // "85237618888": "WeLab Bank Hotline",
-  // "85238978888": "Livi Bank Hotline",
-  // "85238438888": "Ant Bank Hotline",
-
-  // --- Specific Government & Public Main Lines ---
-  // "85239193333": "Legislative Council Secretariat",
-
-  // --- Other ---
-  // "85260832065": "Honey Shan"
-};
+const DATA_SPECIFICS = {};
 
 export default function IndexScreen() {
-  const [isActive, setIsActive] = useState(false); //[cite: 5]
-  const [isProcessing, setIsProcessing] = useState(false); //[cite: 5]
-  const [isReady, setIsReady] = useState(false); //[cite: 5]
+  const [isActive, setIsActive] = useState(false); //
+  const [isProcessing, setIsProcessing] = useState(false); //
+  const [isReady, setIsReady] = useState(false); //
 
-  // Inputs for range testing
   const [startNumber, setStartNumber] = useState('85230000000');
   const [endNumber, setEndNumber] = useState('85231000000');
 
   useEffect(() => {
     const loadState = async () => {
-      const savedState = await AsyncStorage.getItem('shieldStatus'); //[cite: 5]
+      const savedState = await AsyncStorage.getItem('shieldStatus'); //
       if (savedState === 'ON') {
-        setIsActive(true); //[cite: 5]
+        setIsActive(true); //
       }
-      setIsReady(true); //[cite: 5]
+      setIsReady(true); //
     };
     loadState();
   }, []);
@@ -108,27 +93,31 @@ export default function IndexScreen() {
       return;
     }
 
-    setIsProcessing(true); //[cite: 5]
-    const newState = !isActive; //[cite: 5]
+    setIsProcessing(true); //
+    const newState = !isActive; //
 
     try {
       await setBlockStateAndReload(newState, parsedStart, parsedEnd, EXTENSION_IDENTIFIER);
-      await AsyncStorage.setItem('shieldStatus', newState ? 'ON' : 'OFF'); //[cite: 5]
-      setIsActive(newState); //[cite: 5]
+      await AsyncStorage.setItem('shieldStatus', newState ? 'ON' : 'OFF'); //
+      setIsActive(newState); //
     } catch (error) {
       Alert.alert(
         'Action Required',
-        'Please go to iOS Settings > Phone > Call Blocking & Identification and enable this app.' //[cite: 5]
+        'Please go to iOS Settings > Phone > Call Blocking & Identification and enable this app.' //
       );
     } finally {
-      setIsProcessing(false); //[cite: 5]
+      setIsProcessing(false); //
     }
   };
 
-  if (!isReady) return null; //[cite: 5]
+  if (!isReady) return null; //
 
   return (
-    <View style={[styles.container, isActive ? styles.bgActive : styles.bgInactive]}>
+    <ScrollView 
+      style={[isActive ? styles.bgActive : styles.bgInactive]} //
+      contentContainerStyle={styles.container} //
+      keyboardShouldPersistTaps="handled"
+    >
       <Text style={styles.title}>Persistent Spam Blocker</Text>
       <Text style={styles.subtitle}>Blocks HK numbers starting with 3</Text>
 
@@ -139,13 +128,12 @@ export default function IndexScreen() {
             <Text style={[styles.statusText, { marginTop: 10 }]}>Syncing numbers...</Text>
           </>
         ) : isActive ? (
-          <Text style={[styles.statusText, { color: 'green' }]}>SHIELD IS ON 🛡️</Text> //[cite: 5]
+          <Text style={[styles.statusText, { color: 'green' }]}>SHIELD IS ON 🛡️</Text> //
         ) : (
-          <Text style={[styles.statusText, { color: 'red' }]}>SHIELD IS OFF</Text> //[cite: 5]
+          <Text style={[styles.statusText, { color: 'red' }]}>SHIELD IS OFF</Text> //
         )}
       </View>
 
-      {/* Inputs for testing speed */}
       <View style={styles.inputContainer}>
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Start Number:</Text>
@@ -171,9 +159,9 @@ export default function IndexScreen() {
       </View>
 
       <TouchableOpacity
-        style={[styles.button, isProcessing && styles.buttonDisabled, isActive ? styles.btnOff : styles.btnOn]} //[cite: 5]
-        onPress={toggleShield} //[cite: 5]
-        disabled={isProcessing} //[cite: 5]
+        style={[styles.button, isProcessing && styles.buttonDisabled, isActive ? styles.btnOff : styles.btnOn]} //
+        onPress={toggleShield} //
+        disabled={isProcessing} //
       >
         <Text style={styles.buttonText}>
           {isProcessing ? 'Please wait...' : isActive ? 'Turn OFF Shield' : 'Turn ON Shield'}
@@ -186,7 +174,6 @@ export default function IndexScreen() {
 
       {true && (
         <View style={styles.dataContent}>
-
           <Text style={styles.dataHeader}>🛡️ Blocked Ranges (10,000,000 Numbers)</Text>
           <View style={styles.dataBox}>
             <Text style={styles.dataText}>Part 1: 852 3000 0000 ➔ 852 3399 9999</Text>
@@ -213,31 +200,30 @@ export default function IndexScreen() {
               </View>
             ))}
           </View>
-
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 }, //[cite: 5]
-  bgActive: { backgroundColor: '#e6ffe6' }, //[cite: 5]
-  bgInactive: { backgroundColor: '#f9f9f9' }, //[cite: 5]
-  title: { fontSize: 24, fontWeight: 'bold' }, //[cite: 5]
+  container: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: 20, paddingBottom: 60 }, //
+  bgActive: { backgroundColor: '#e6ffe6' }, //
+  bgInactive: { backgroundColor: '#f9f9f9' }, //
+  title: { fontSize: 24, fontWeight: 'bold' }, //
   subtitle: { fontSize: 16, color: '#555', marginBottom: 20, marginTop: 5 },
   card: { padding: 20, backgroundColor: '#fff', borderRadius: 15, elevation: 5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8, alignItems: 'center', justifyContent: 'center', width: '100%', height: 120, marginBottom: 20 },
-  statusText: { fontSize: 22, fontWeight: 'bold' }, //[cite: 5]
+  statusText: { fontSize: 22, fontWeight: 'bold' }, //
   inputContainer: { width: '100%', marginBottom: 20 },
   inputGroup: { marginBottom: 12 },
   label: { fontSize: 14, fontWeight: '600', color: '#333', marginBottom: 4 },
   input: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#ccc', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: 16 },
-  button: { paddingHorizontal: 30, paddingVertical: 18, borderRadius: 30, width: '100%', alignItems: 'center', marginBottom: 20 }, //[cite: 5]
-  btnOn: { backgroundColor: '#007AFF' }, //[cite: 5]
-  btnOff: { backgroundColor: '#FF3B30' }, //[cite: 5]
-  buttonDisabled: { backgroundColor: '#999' }, //[cite: 5]
-  buttonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' }, //[cite: 5]
-  instructions: { fontSize: 14, color: '#666', textAlign: 'center', paddingHorizontal: 20, lineHeight: 22 }, //[cite: 5]
+  button: { paddingHorizontal: 30, paddingVertical: 18, borderRadius: 30, width: '100%', alignItems: 'center', marginBottom: 20 }, //
+  btnOn: { backgroundColor: '#007AFF' }, //
+  btnOff: { backgroundColor: '#FF3B30' }, //
+  buttonDisabled: { backgroundColor: '#999' }, //
+  buttonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' }, //
+  instructions: { fontSize: 14, color: '#666', textAlign: 'center', paddingHorizontal: 20, lineHeight: 22 }, //
   masterButton: { backgroundColor: '#FF9500', padding: 18, borderRadius: 12, width: '100%', alignItems: 'center', marginBottom: 25, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 4 },
   masterButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
   whitelistCard: { backgroundColor: '#f0f4ff', borderColor: '#c7d8ff' },
@@ -246,11 +232,10 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: 18, fontWeight: '600' },
   cardSubtitle: { fontSize: 12, color: '#666', marginTop: 2 },
   btnWhitelist: { backgroundColor: '#5856D6' },
-
   dataSection: { width: '100%', marginTop: 20, marginBottom: 40 },
   dataToggle: { backgroundColor: '#eee', padding: 15, borderRadius: 10, alignItems: 'center' },
   dataToggleText: { fontSize: 16, fontWeight: '600', color: '#333' },
-  dataContent: { marginTop: 15, padding: 10 },
+  dataContent: { marginTop: 15, padding: 10, width: '100%' },
   dataHeader: { fontSize: 16, fontWeight: 'bold', marginTop: 15, marginBottom: 5, color: '#222' },
   dataSubText: { fontSize: 12, color: '#666', marginBottom: 5, fontStyle: 'italic' },
   dataBox: { backgroundColor: '#f8f8f8', padding: 15, borderRadius: 8, borderWidth: 1, borderColor: '#ddd' },
