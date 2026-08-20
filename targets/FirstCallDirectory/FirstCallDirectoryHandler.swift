@@ -44,9 +44,13 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
         }
 */
         
-        // ⚠️ CHANGE THESE TWO VARIABLES IN EACH OF THE 3 FOLDERS ⚠️
-        let startNumber: Int64 = Int64(defaults?.integer(forKey: "startNumber") ?? 85230000000)
-        let endNumber: Int64 = Int64(defaults?.integer(forKey: "endNumber") ?? 85230000001)
+        // Read the raw integer; if it's completely missing or App Group fails, it defaults to 0
+        let rawStart = defaults?.integer(forKey: "startNumber") ?? 0
+        let rawEnd = defaults?.integer(forKey: "endNumber") ?? 0
+
+        // Manually apply your fallbacks if the value is 0
+        let startNumber: Int64 = rawStart == 0 ? 85230000000 : Int64(rawStart)
+        let endNumber: Int64 = rawEnd == 0 ? 85230000001 : Int64(rawEnd)
         
         let chunkSize: Int64 = 100000
         var currentStart: Int64 = startNumber
