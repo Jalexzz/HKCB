@@ -1,7 +1,7 @@
 import Foundation
 import CallKit
 
-class FirstCallDirectoryHandler: CXCallDirectoryProvider {
+class CallDirectoryHandler: CXCallDirectoryProvider {
     
     override func beginRequest(with context: CXCallDirectoryExtensionContext) {
         context.delegate = self
@@ -48,7 +48,7 @@ class FirstCallDirectoryHandler: CXCallDirectoryProvider {
     }
 }
 
-extension FirstCallDirectoryHandler: CXCallDirectoryExtensionContextDelegate {
+extension CallDirectoryHandler: CXCallDirectoryExtensionContextDelegate {
     func requestFailed(for extensionContext: CXCallDirectoryExtensionContext, withError error: Error) {
         // Handle extension error
     }
